@@ -1,0 +1,35 @@
+/* profile page style */
+/*body{
+	margin:10px;
+}*/
+.cover{
+	position: relative;
+	top: 0; 
+	left: 0;
+	border:1px solid black;
+	
+}
+.profile{
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	border:1px solid black;
+	box-shadow: 5px 5px 3px #444444; /*right down effect*/
+	
+}
+.profilePics{
+	position: relative; 
+	left: 0; 
+	top: 0;
+}
+#fullName{
+	font-size: 26px;
+}
+#titleFriends{
+
+}
+#pFriendList{
+	list-style-type:none;
+
+	
+}

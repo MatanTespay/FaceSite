@@ -1,0 +1,10 @@
+ {"users":
+ [
+ {"userId":"1","fname":"Moomin","lname":"Troll","pic":"Pics/profile1.png","cover":"Pics/cover1.png","isOn":"1"},
+ {"userId":"2","fname":"Snorka","lname":"Maiden","pic":"Pics/profile3.png","cover":"Pics/cover1.png","isOn":"1"},
+ {"userId":"3","fname":"Snufkin","lname":"Traveler","pic":"Pics/profile4.png","cover":"Pics/cover1.png","isOn":"0"},
+ {"userId":"4","fname":"Little","lname":"My","pic":"Pics/profile2.png","cover":"Pics/cover1.png","isOn":"1"},
+ {"userId":"5","fname":"The","lname":"Groke","pic":"Pics/profile5.png","cover":"Pics/cover5.png","isOn":"0"},
+ {"userId":"6","fname":"Admin","lname":"Admin","pic":"Pics/profile5.png","cover":"Pics/cover5.png","isOn":"1"}
+ ]
+ }
