@@ -32,6 +32,7 @@
 		/* %>
 			 <script type="text/javascript">
 			 alert("session cleaned: " +  '<%= session.getAttribute("userid")  %>');
+			 // test first commit from shanny
 			 </script>
 			 <% */
 		}
