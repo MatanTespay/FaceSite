@@ -2,9 +2,7 @@
 	pageEncoding="windows-1255"%>
 <%@ page import="java.sql.*"%>
 <% 
-	coreservlets.MyConnection con = new coreservlets.MyConnection();
-	session.setAttribute("connection", con);
-
+	coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");	
 %>
 
 <%

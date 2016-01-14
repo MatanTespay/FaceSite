@@ -12,7 +12,11 @@
 <link rel="stylesheet" href="Css/loginRegStyle.css">
 <!-- <script src="Js/loginCheck.js" type="text/javascript"></script> -->
 
+<% 
+	coreservlets.MyConnection con = new coreservlets.MyConnection();
+	session.setAttribute("connection", con);
 
+%>
 
 <%
 	
@@ -21,7 +25,7 @@
 			session.setAttribute("userid", null);
 			
 			//get the connection
-			coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
+			con = (coreservlets.MyConnection)session.getAttribute("connection");
 			if(con!=null) //close the connection on logout
 			{
 				con.closeConnection();
