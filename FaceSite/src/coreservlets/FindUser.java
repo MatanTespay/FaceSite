@@ -69,6 +69,7 @@ public class FindUser extends HttpServlet {
 		    	map.put("isExist", isExist);
 		    	write(response,map);
 		    	System.out.println("Exist? "+isExist);
+		    	ps.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
