@@ -46,7 +46,7 @@ public class FindUser extends HttpServlet {
 		if(session!=null)
 		{
 			MyConnection con = (MyConnection)session.getAttribute("connection");
-		//	PrintWriter out = response.getWriter();
+		//	PrintWriter out = response.getWriter(); OK!!!!!
 			
 			String user = request.getParameter("user");
 			

@@ -3,7 +3,7 @@ function check()
 	var user = document.getElementById("user");
 	var pass = document.getElementById("pass");
 
-	if(user.value != "Admin" || pass.value!="Admin")
+	if(user.value != "" || pass.value!="")
 	{
 		var err=document.getElementById("err");
 		err.innerHTML="Username or password are incorrect.";
