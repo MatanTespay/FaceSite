@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class FindUser
@@ -49,6 +53,7 @@ public class FindUser extends HttpServlet {
 			String pwd = request.getParameter("password");
 			
 			try {
+				boolean isExist = false;
 				PreparedStatement ps = null;
 				ResultSet rs;
 				String query = "SELECT *\n" +
@@ -58,10 +63,14 @@ public class FindUser extends HttpServlet {
 				ps.setString(1, user);
 				ps.setString(2, pwd);
 			    rs = ps.executeQuery();
+			    Map<String,Object> map = new HashMap<String,Object>();
 			    if(rs.next())
-			    	write(response,"exist"); 
+			    	isExist = true;
 			    else
-			    	write(response,"not exist"); 
+			    	isExist = false;
+		    	map.put("isExist", isExist);
+		    	write(response,map);
+		    	System.out.println("Exist? "+isExist);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,10 +80,11 @@ public class FindUser extends HttpServlet {
 		
 	}
 	
-	private void write(HttpServletResponse res, String content) throws IOException{
+	private void write(HttpServletResponse res, Map<String,Object> content) throws IOException{
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
-		res.getWriter().write(content);
+		res.getWriter().write(new Gson().toJson(content));
+		
 	}
 
 }

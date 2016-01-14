@@ -4,6 +4,7 @@
 <meta charset="windows-1255">
 
 <script src="Js/registration.js" type="text/javascript" ></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/Css/font-awesome.min.css'>
 	<link rel="stylesheet" type="text/css" href="Css/loginRegStyle.css">

@@ -13,6 +13,8 @@
 			flag = false;
 		if(!passwordCheck(cfmPassword,password,cfmPasswordErr,passErr))
 			flag = false;
+		if(!checkDB(user, userErr))
+			flag = false;
 		
 
 		if(flag == true){		
@@ -26,6 +28,29 @@
 		
 	}
 
+	function checkDB(username, errObj)
+	{
+		$.ajax({
+			url:'FindUser',
+			type: 'POST',
+			datatype: 'json',
+			success: function(data){
+				if(data.isExist)
+				{
+					errObj.innerHTML = "Username already exist.";
+					errObj.style.display = "inline";
+					errObj.style.color = "Red";	
+					return false;
+				}
+				else
+					return true;
+			},
+			error: function(e) {
+				alert("error in ajax function");
+			}
+		});
+	}
+	
 	function isValueEmpty(obj) {
 
 		if (obj.value.trim().length == 0)
@@ -131,7 +156,7 @@
 			emailErr.innerHTML = "Email is incorrect";
 			emailErr.style.display = "inline";
 			emailErr.style.color = "Red";			
-			return false
+			return false;
 			
 		} else {
 
