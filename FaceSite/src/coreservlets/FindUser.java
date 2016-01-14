@@ -1,7 +1,6 @@
 package coreservlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,12 +46,12 @@ public class FindUser extends HttpServlet {
 		if(session!=null)
 		{
 			MyConnection con = (MyConnection)session.getAttribute("connection");
-			PrintWriter out = response.getWriter();
+		//	PrintWriter out = response.getWriter();
 			
 			String user = request.getParameter("user");
-			String pwd = request.getParameter("password");
 			
 			try {
+				System.out.println("bla");
 				boolean isExist = false;
 				PreparedStatement ps = null;
 				ResultSet rs;
@@ -61,7 +60,6 @@ public class FindUser extends HttpServlet {
 						"WHERE username = ?";
 				ps=con.getConnection().prepareStatement(query);
 				ps.setString(1, user);
-				ps.setString(2, pwd);
 			    rs = ps.executeQuery();
 			    Map<String,Object> map = new HashMap<String,Object>();
 			    if(rs.next())
