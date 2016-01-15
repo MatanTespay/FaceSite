@@ -49,7 +49,7 @@ public class FindUser extends HttpServlet {
 		//	PrintWriter out = response.getWriter(); OK!!!!!
 			
 			String user = request.getParameter("user");
-			
+			System.out.println(user); // check user from client
 			try {
 				boolean isExist = false;
 				PreparedStatement ps = null;
