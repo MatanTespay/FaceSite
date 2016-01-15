@@ -51,7 +51,6 @@ public class FindUser extends HttpServlet {
 			String user = request.getParameter("user");
 			
 			try {
-				System.out.println("bla");
 				boolean isExist = false;
 				PreparedStatement ps = null;
 				ResultSet rs;

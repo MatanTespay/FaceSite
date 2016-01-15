@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
 	pageEncoding="windows-1255"%>
 <%@ page import="java.sql.*"%>
-<% 
-	coreservlets.MyConnection con = new coreservlets.MyConnection();
-	session.setAttribute("connection", con);
 
-%>
 
 <%
+	coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
 	String userid = request.getParameter("user");
 	String pwd = request.getParameter("pass");
 	//int userNumber = 6;
@@ -29,7 +26,7 @@
 		//out.println("<a href='logout.jsp'>Log out</a>");
 		response.sendRedirect("mainPage.jsp");
 	} else {
-		con.closeConnection();
+		//con.closeConnection();
 		out.println("Invalid password <a href='Login.jsp'>Try again</a>"
 				+ userid + userid);
 	}
