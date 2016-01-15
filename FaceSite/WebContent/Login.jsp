@@ -13,7 +13,7 @@
 <script src="Js/loginCheck.js" type="text/javascript"></script>
 
 <% 
-//create a connection and store it in session attribute
+    //create a connection and store it in session attribute
 	coreservlets.MyConnection con = new coreservlets.MyConnection();
 	session.setAttribute("connection", con);
 
