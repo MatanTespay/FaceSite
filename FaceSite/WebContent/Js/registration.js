@@ -14,7 +14,12 @@
 			flag = false;
 		if(!passwordCheck(cfmPassword,password,cfmPasswordErr,passErr))
 			flag = false;
+<<<<<<< HEAD
 
+=======
+		if(!checkDB($("#user").val(), userErr))
+			flag = false;
+>>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
 		
 
 		if(flag == true){		
@@ -40,7 +45,11 @@
 			async: false,
 			type: 'POST',
 			datatype: 'json',
+<<<<<<< HEAD
 			data: $('#registerForm').serialize(),
+=======
+			 data: {  'user': username },
+>>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
 			success: function(data){
 				if(data.isExist)
 				{
