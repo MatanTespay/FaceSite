@@ -13,7 +13,7 @@
 			flag = false;
 		if(!passwordCheck(cfmPassword,password,cfmPasswordErr,passErr))
 			flag = false;
-		if(!checkDB(user, userErr))
+		if(!checkDB($("#user").val(), userErr))
 			flag = false;
 		
 
@@ -34,6 +34,7 @@
 			url:'FindUser',
 			type: 'POST',
 			datatype: 'json',
+			 data: {  'user': username },
 			success: function(data){
 				if(data.isExist)
 				{

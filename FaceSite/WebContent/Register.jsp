@@ -43,7 +43,7 @@
 	   <span  id="lnErr" class="error" style="display: none;"> </span>
 	  
 		<label id="icon" for="name"><i class="icon-user"></i></label>
-	  <input type="text"  id="user" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
+	  <input type="text"  id="user" name="user" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
 	  <span  id="userErr" class="error" style="display: none;"></span>
 	 
 	   <label id="icon" for="name"><i class="icon-user"></i></label>
