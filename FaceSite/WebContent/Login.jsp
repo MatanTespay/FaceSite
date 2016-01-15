@@ -30,8 +30,8 @@
 			if(con!=null) //close the connection on logout
 			{
 				//TODO: change this...
-				con.closeConnection();
-				session.setAttribute("connection", null);
+			/*	con.closeConnection();
+				session.setAttribute("connection", null);*/
 			}
 			
 			request.getSession().invalidate();

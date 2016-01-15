@@ -48,7 +48,7 @@ public class FindUser extends HttpServlet {
 			MyConnection con = (MyConnection)session.getAttribute("connection");
 		//	PrintWriter out = response.getWriter(); OK!!!!!
 			
-			String user = request.getParameter("user");
+			String user = request.getParameter("userRegister");
 			System.out.println(user); // check user from client
 			try {
 				boolean isExist = false;

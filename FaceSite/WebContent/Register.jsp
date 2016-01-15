@@ -34,7 +34,7 @@
 	  <h2 style="display:none;"> </h2>
 	<div class="form"> 
 	<h2>Register</h2>
-	  <form name="myForm" action="mainPage.jsp" onsubmit="return onBtnClick()" method="get"> 
+	  <form id="registerForm" name="myForm" action="RegisterHandler.jsp" onsubmit="return onBtnClick()" method="post"> 
 	 <label id="icon" for="name"><i class="icon-envelope "></i></label>
 	  <input type="text"  id="fn" onblur="OnlyLetters(this, fnErr)" placeholder="First Name" class="regInput" />
 	  <span id="fnErr" class="error" style="display: none;"></span>
@@ -43,7 +43,7 @@
 	   <span  id="lnErr" class="error" style="display: none;"> </span>
 	  
 		<label id="icon" for="name"><i class="icon-user"></i></label>
-	  <input type="text"  id="user" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
+	  <input type="text"  name="userRegister" id="userRegister" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
 	  <span  id="userErr" class="error" style="display: none;"></span>
 	 
 	   <label id="icon" for="name"><i class="icon-user"></i></label>

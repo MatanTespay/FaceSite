@@ -1,11 +1,12 @@
 	function onBtnClick() {
 	    var flag = true;
-		
+		var dbCheckResult = true;
+	    
 		if(!OnlyLetters(ln, lnErr))
 			flag = false;
 		if(!OnlyLetters(fn, fnErr))
 			flag = false;
-		if(!userValidate(user, userErr))
+		if(!userValidate(userRegister, userErr))
 			flag = false;
 		if(!validateEmail(email,emailErr))
 			flag = false;
@@ -13,13 +14,16 @@
 			flag = false;
 		if(!passwordCheck(cfmPassword,password,cfmPasswordErr,passErr))
 			flag = false;
-		if(!checkDB(user, userErr))
-			flag = false;
+
 		
 
 		if(flag == true){		
-			return true ;
+			if(!checkDB(userRegister, userErr))
+				dbCheckResult = false;
 		}
+		
+		if(flag == true && dbCheckResult == true)
+			return true;
 		
 		else{
 		
@@ -30,25 +34,29 @@
 
 	function checkDB(username, errObj)
 	{
+		var result = false;
 		$.ajax({
 			url:'FindUser',
+			async: false,
 			type: 'POST',
 			datatype: 'json',
+			data: $('#registerForm').serialize(),
 			success: function(data){
 				if(data.isExist)
 				{
-					errObj.innerHTML = "Username already exist.";
+					errObj.innerHTML = "Username already exist";
 					errObj.style.display = "inline";
 					errObj.style.color = "Red";	
-					return false;
+					
 				}
 				else
-					return true;
+					result=true;
 			},
 			error: function(e) {
 				alert("error in ajax function");
 			}
 		});
+		return result;
 	}
 	
 	function isValueEmpty(obj) {
