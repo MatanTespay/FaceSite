@@ -43,11 +43,7 @@
 	   <span  id="lnErr" class="error" style="display: none;"> </span>
 	  
 		<label id="icon" for="name"><i class="icon-user"></i></label>
-<<<<<<< HEAD
 	  <input type="text"  name="userRegister" id="userRegister" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
-=======
-	  <input type="text"  id="user" name="user" onblur="userValidate(this,userErr)" placeholder="User Name" class="regInput"/>
->>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
 	  <span  id="userErr" class="error" style="display: none;"></span>
 	 
 	   <label id="icon" for="name"><i class="icon-user"></i></label>
