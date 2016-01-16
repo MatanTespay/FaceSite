@@ -1,3 +1,18 @@
 name		- where used
 ======================
 getAllUsers	- mainPage
+
+
+insertNewUser - registerHandler.jsp
+INSERT  into tbluser  values(?,?,?,?,?,?,?,?);
+
+
+check if user exist (pass&user) - checkLogin.jsp
+"SELECT *\n" +
+"FROM tbluser \n" +
+"WHERE username = ? AND password = ?";
+			
+			
+insert post - postHandler
+INSERT  into tblpost (date,content,author) values(?,?,?);
+			

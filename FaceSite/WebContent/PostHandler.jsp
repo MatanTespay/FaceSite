@@ -1,12 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
     pageEncoding="windows-1255"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page import="java.sql.*"%>
+<%
+	String insert = "INSERT  into tblpost (date,content,author) values(?,?,?);";
+	coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
+	if(con!=null)
+	{
+		try{
 
-</body>
-</html>
+			String userid = (String)session.getAttribute("userid");
+			PreparedStatement ps;
+			ps = con.getConnection().prepareStatement(insert);
+			java.sql.Date date = new java.sql.Date(java.util.Calendar.getInstance().getTime().getTime());
+			System.out.println(request.getParameter("write"));
+			ps.setDate(1, date);
+			ps.setString(2, request.getParameter("write"));
+			ps.setString(3, userid);
+			ps.executeUpdate();
+			ps.close();
+
+			response.sendRedirect("mainPage.jsp");
+		}
+		catch(SQLException e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+
+%>
