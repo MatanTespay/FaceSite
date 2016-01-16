@@ -36,10 +36,10 @@
 	<h2>Register</h2>
 	  <form id="registerForm" name="myForm" action="RegisterHandler.jsp" onsubmit="return onBtnClick()" method="post"> 
 	 <label id="icon" for="name"><i class="icon-envelope "></i></label>
-	  <input type="text"  id="fn" onblur="OnlyLetters(this, fnErr)" placeholder="First Name" class="regInput" />
+	  <input type="text" name="fn"  id="fn" onblur="OnlyLetters(this, fnErr)" placeholder="First Name" class="regInput" />
 	  <span id="fnErr" class="error" style="display: none;"></span>
 		<label id="icon" for="name"><i class="icon-user"></i></label>
-	  <input type="text"  id="ln" onblur="OnlyLetters(this, lnErr)" placeholder="Last Name" class="regInput"/>
+	  <input type="text" name="ln"  id="ln" onblur="OnlyLetters(this, lnErr)" placeholder="Last Name" class="regInput"/>
 	   <span  id="lnErr" class="error" style="display: none;"> </span>
 	  
 		<label id="icon" for="name"><i class="icon-user"></i></label>
@@ -47,15 +47,15 @@
 	  <span  id="userErr" class="error" style="display: none;"></span>
 	 
 	   <label id="icon" for="name"><i class="icon-user"></i></label>
-	  <input type="text"  id="email" onblur="validateEmail(this,emailErr)" placeholder="Email" class="regInput"/>        
+	  <input type="text" name="email" id="email" onblur="validateEmail(this,emailErr)" placeholder="Email" class="regInput"/>        
 	 <span id="emailErr"  class="error" style="display: none;"></span>
 	 
 	   <label id="icon" for="name"><i class="icon-user"></i></label>
-	  <input type="password"  id="password" onblur="passwordCheck(this,cfmPassword,passErr,cfmPasswordErr)" placeholder="Password" class="regInput" /> 
+	  <input type="password" name="password"  id="password" onblur="passwordCheck(this,cfmPassword,passErr,cfmPasswordErr)" placeholder="Password" class="regInput" /> 
 	 <span id="passErr" class="error"></span>
 	   <label id="icon" for="name"><i class="icon-user"></i></label>
 	 
-	  <input type="password"  id="cfmPassword" onblur="passwordCheck(this,password,cfmPasswordErr,passErr)" placeholder="Confirm Password" class="regInput" />
+	  <input type="password" name="cfmPassword"  id="cfmPassword" onblur="passwordCheck(this,password,cfmPasswordErr,passErr)" placeholder="Confirm Password" class="regInput" />
 	   <span id="cfmPasswordErr" class="error" style="display: none;"></span>
 	  <button id="Sendbtn" class="button" type="submit" >Send</button>   
 	   

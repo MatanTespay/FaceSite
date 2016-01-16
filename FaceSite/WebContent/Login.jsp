@@ -10,7 +10,13 @@
 <link rel='stylesheet prefetch'
 	href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/Css/font-awesome.min.css'>
 <link rel="stylesheet" href="Css/loginRegStyle.css">
-<script src="Js/loginCheck.js" type="text/javascript"></script>
+<!--  <script src="Js/loginCheck.js" type="text/javascript"></script>-->
+<script>
+	function register()
+	{
+		window.open("Register.jsp","_self");
+	}
+</script>
 
 <% 
     //create a connection and store it in session attribute

@@ -15,7 +15,3 @@ function check()
 	return true;
 }
 
-function register()
-{
-	window.open("Register.jsp","_self");
-}

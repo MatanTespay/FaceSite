@@ -100,11 +100,13 @@
 				</div>
 			</div>
 			<div id="section">
+				<form action="PostHandler.jsp">
 				<label for="write"><b>Write something! :)</b></label> <br>
 				<!--<input type="text" id="write"> -->
-				<textarea id="write" rows="5" cols="45"></textarea>
+				<textarea name="write" id="write" rows="5" cols="45"></textarea>
 				<br>
-				<button id="btnPost" type="button">Post It!</button>
+				<button id="btnPost" type="submit">Post It!</button>
+				</form>
 				<br> <br>
 				<div id="postList"></div>
 			</div>
