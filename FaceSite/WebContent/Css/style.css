@@ -333,7 +333,7 @@ tr.border_bottom td {
 }
 
 #searchfield  .biginput {
-	width: 190px;
+	width: 200px;
 	height: 40px;
 	/*  padding: 0 10px 0 10px;  */
 	background-color: #fff;
@@ -350,4 +350,9 @@ tr.border_bottom td {
 #searchfield form .biginput:focus {
 	color: #858585;
 }
-
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    background-color: #909ebb;
+    line-height: 1.5;
+  }

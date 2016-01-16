@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="Css/style.css" />
 
-
-
 <!-- <script type="text/javascript" src="Js/jquery.autocomplete.js"></script> -->
 
 <!--[if lt IE 7]>
@@ -22,6 +20,9 @@
 		</style>
 	<![endif]-->
 
+ <script type="text/javascript">
+		var currentUserId =	 '<%= session.getAttribute("userid")  %>';	
+</script>
 
 <%
 	response.setHeader("Cache-Control","no-cache");
@@ -85,7 +86,7 @@
 			<div id="nav">
 				<div id="searchfield">
 					<form>
-						<input type="text" placeholder="Search Friends"  class="biginput" onkeypress="searchFriends();" id="autocomplete">
+						<input type="text" placeholder="Search Friends"  class="biginput" onkeypress="getAllUsers(currentUserId);" id="autocomplete">
 					</form>
 				</div>
 				<!-- @end #searchfield -->

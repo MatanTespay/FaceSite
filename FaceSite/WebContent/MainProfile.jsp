@@ -4,12 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title>Main window</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="Js/mainPageFunctions.js" type="text/javascript"></script>
 
 <link rel="stylesheet" type="text/css" href="Css/style.css" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="Css/profileStyle.css">
 
 
@@ -18,19 +20,23 @@
 			#wrapper { height:100%; }
 		</style>
 	<![endif]-->
+
+<script type="text/javascript">
+		var currentUserId =	 '<%=session.getAttribute("userid")%>';
+</script>
+
 <%
-	response.setHeader("Cache-Control","no-cache");
-	response.setHeader("Cache-Control","no-store");
-	response.setHeader("Pragma","no-cache");
-	response.setDateHeader ("Expires", 0);
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
 %>
-	
+
 <%
-	if(session.getAttribute("userid") == null) {
-			response.sendRedirect("Login.jsp");
-			return;
+	if (session.getAttribute("userid") == null) {
+		response.sendRedirect("Login.jsp");
+		return;
 	}
-	
 %>
 </head>
 
@@ -66,7 +72,7 @@
 				<div id="NotifDropDown" class="notif-dropdown-content">
 					<table class="msg_table">
 					</table>
-				</div>				
+				</div>
 			</div>
 			<div class="LogOut_Class">
 				<a id="logout" href="Login.jsp?action=logout"> <img
@@ -80,11 +86,12 @@
 			<div id="nav">
 				<div id="searchfield">
 					<form>
-						<input type="text" placeholder="Search Friends"  class="biginput" onkeypress="searchFriends();" id="autocomplete">
+						<input type="text" placeholder="Search Friends" class="biginput"
+							onkeypress="getAllUsers(currentUserId);" id="autocomplete">
 					</form>
 				</div>
 				<!-- @end #searchfield -->
-			
+
 				<div>
 					<ul id="friendsList_title">
 						<h3>Online Friends</h3>
@@ -95,22 +102,22 @@
 					<ul id="friendsList"></ul>
 				</div>
 			</div>
-				<div id="section">
-		<%
-			if(request.getParameter("fname")!=null)
-			{
-		%>
-		<h1>Welcome to the profile of
-		<%
-			out.print(request.getParameter("fname")+" ");
-			out.print(request.getParameter("lname"));
-		%>
-		</h1>
-		<%	}
-		
-			else{
-	
-		%>
+			<div id="section">
+				<%
+					if (request.getParameter("fname") != null) {
+				%>
+				<h1>
+					Welcome to the profile of
+					<%
+					out.print(request.getParameter("fname") + " ");
+						out.print(request.getParameter("lname"));
+				%>
+				</h1>
+				<%
+					}
+
+					else {
+				%>
 				<!--Profile Content -->
 				<div class="profilePics"></div>
 
@@ -125,7 +132,9 @@
 					</ul>
 				</div>
 			</div>
-		<% } %>
+			<%
+				}
+			%>
 
 		</div>
 		<!-- #content -->

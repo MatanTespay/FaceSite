@@ -2,9 +2,9 @@ var _users;
 var _users;
 var _friends;
 var currentUser = 1;
+
 var pageX, pageY;
 
-	
 function getData() {
 	//get online friends
     $.ajax({
@@ -26,11 +26,11 @@ function getData() {
 								return;
 							}else{
 								var name = item.fname + " " + item.lname;
-								if(item.userId == friend.userId && item.isOn=="1"){ //show only online friends for index
+/*								if(item.userId == friend.userId && item.isOn=="1"){ //show only online friends for index
 								$("#friendsList").append("<li><a href=MainProfile.jsp?fname="+item.fname+"&lname="+item.lname+ ">"+name+"</a></li>");
 								
 								//getPostDeatails(item);
-								}
+								}*/
 						        if(item.userId == friend.userId) //all friends for profile + all post of friends for index
 							   	  {
 									$("#pFriendList").append("<li><a href=MainProfile.jsp?fname="+item.fname+"&lname="+item.lname+ ">"+name+"</a></li>");//profile
@@ -57,7 +57,37 @@ function getData() {
 
 function getOnlineFriends() {
 	//get online friends
+	
 	$("#friendsList").empty();
+    $.ajax({
+        url: "getFriendsHandler.jsp",     
+		dataType: "json",
+		data: 'userName='+currentUserId, 
+        success: function(data) {  
+        	
+				$.each(data, function(j, item) {
+				// console.log(item.fname + " " + item.lname);
+				if (item.isOnline) {
+					var str = item.FullName;
+					var res = str.split(" ");
+
+					$("#friendsList").append(
+							"<li><a href=MainProfile.jsp?fname=" + res[0]
+									+ "&lname=" + res[1] + ">" + str
+									+ "</a></li>");
+
+				}
+
+			});
+			 
+        },
+        error: function(e) {
+			alert("error in friends!!!!!");
+        }
+    });
+    
+    
+	/*$("#friendsList").empty();
     $.ajax({
         url: "Js/friends.js",     
 		dataType: "json"	,	
@@ -94,8 +124,105 @@ function getOnlineFriends() {
         error: function(e) {
 			alert("error in friends!!!!!");
         }
-    });
+    });*/
 }
+
+//adding friend with ajax to DB,and get result of action
+function addFriend(friendName){
+	
+	$.ajax({
+		url:'insertFriendHandler.jsp',
+		async: false,
+		type: 'POST',
+		datatype: 'json',
+		// currentUserId is value from the page, need to set in every page
+		data: 'user=' + currentUserId + '&friend=' + friendName ,
+		success: function(data){
+			
+			 	if(data && data.result){
+			 	
+			 		getOnlineFriends();
+			 	}
+			 	else{
+			 		alert('Opps..!!');
+			 	}
+		},
+		error: function(e) {
+			alert("error in ajax adding friend");
+		}
+	});
+	
+	
+}
+//function to get all Users when we use the search input
+function getAllUsers(userName){
+	
+	
+	$("#autocomplete").catcomplete(
+			{
+				// source function of autocomplete to get custom data
+				source : function(request, response) {
+					
+					var p = $.ui.autocomplete.escapeRegex(request.term);
+					//the array that holds the result of all users we need
+					var result = [];
+					
+					$.ajax({
+						url:'searchHandler.jsp',
+						async: false,
+						type: 'POST',
+						datatype: 'json',
+						data: 'prefix=' + p + '&userName=' + userName ,
+						success: function(data){
+							
+							 $.each(data, function(j,item) {
+								 result.push({ label: item.FullName, value: item.username,  Category : item.Category  });
+								
+								});
+							 	
+						},
+						error: function(e) {
+							alert("error in ajax getAllUsers");
+						}
+					});
+					
+		            //send the result array to the callback function of the source function to handle the data				            
+		            response(result);
+
+				},
+				//min number of chars to fire the autocomplete function
+				minLength : 1,
+				// select function handle select event of item in the list
+				select : function(event, ui) {
+						//set label (name of user) in the input field
+				      $('#autocomplete').val(ui.item.label); 
+				      
+				      //open page profile of friend
+				      var str = ui.item.label;
+				      var res = str.split(" ");
+				      if ( ui.item.Category != 'Friends'){
+				    	  addFriend(ui.item.value);
+				    	  $('#autocomplete').val(""); 
+				      }
+				      else
+				      window.open("MainProfile.jsp?fname="+res[0]+"&lname="+res[1] , "_self");
+				     
+				      //disable default action of select function (set input field to the value and not the label)
+				      return false;
+				},
+				// focus function handle focus event of item in the list
+				focus : function(event, ui) {
+					//set label (name of user) in the input field
+				      $('#autocomplete').val(ui.item.label); 
+				    //disable default action of select function (set input field to the value and not the label)
+				      return false;
+				}
+				
+				
+			});
+	
+}
+
 //function to get all friends when we use the search input
 function searchFriends () {	
 
@@ -567,17 +694,72 @@ function showWellcomDialog(){
 
 }
 
+function customAutoComplete(){
+	
+	$.widget( "custom.catcomplete", $.ui.autocomplete, {
+	    _create: function() {
+	      this._super();
+	      this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	    },
+	    _renderMenu: function( ul, items ) {
+	      var that = this,
+	        currentCategory = "";
+	      $.each( items, function( index, item ) {
+	        var li;
+	        if ( item.Category != currentCategory ) {
+	          ul.append( "<li class='ui-autocomplete-category'>" + item.Category + "</li>" );
+	          currentCategory = item.Category;
+	        }
+	        li = that._renderItemData( ul, item );
+	        //<img  id='likeBtn_"+value.postId +"'  src='Pics/thumb-hover.png' >
+	        if ( item.Category ) {
+	          li.attr( "aria-label", item.Category + " : " + item.label );
+	        }
+	      });
+	    },
+	    
+	    _renderItem: function( ul, item ) {
+	    	var li = $( "<li>" );
+	    	
+	    	if ( item.Category != 'Friends') {
+		           li.attr( "aria-label", item.Category + " : " + item.label );
+		           li.attr( "data-value", item.value ).append( item.label ).append(
+		        		  "<img  src='Pics/adduser.png' style='float: right; display:inline '>"
+		        		   ).appendTo( ul );
+		    }
+	    	else{
+	    		li.attr( "aria-label", item.Category + " : " + item.label );
+	    		li.attr( "data-value", item.value ).append( item.label ).append(
+		        		  "<img  src='Pics/forward.png' style='float: right;  display:inline'>"
+		        		   ).appendTo( ul );
+	    	}
+	    	 
+	    	return li;
+	    	}
+	    
+	    
+	    
+	  });
+}
+
 $(document).ready(function(){
 	$( document ).on( "mousemove", function( event ) {
 	pageX= event.pageX ; pageY= event.pageY;
 	});
 	getData();
-	setInterval(getOnlineFriends,5000);
+	
+	getOnlineFriends();
+	
+	setInterval(getOnlineFriends,8000);
+	
 	getFullName(currentUser); //for profile page
 	getPictures();
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');
+	
+	//create the new autoComplete
+	customAutoComplete();
 
 });
 
