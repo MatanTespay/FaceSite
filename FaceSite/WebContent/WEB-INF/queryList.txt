@@ -1,13 +1,20 @@
 name		- where used
 ======================
+			
+
 getAllUsers	- mainPage
 
-(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName', 'Friends' as 'Category'
-from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser
-where  u.firstName  like 's%' and f.firstUser = 'snufkin')
 
-Union
-select CONCAT(u.firstName, ' ', u.lastName) as 'FullName', 'Others' as 'Category'
-from  facebookdb.tbluser as u
-where u.username like 'sno%' and (u.username != 'snufkin')
- and u.username Not in (select f.secondUser from tblfriend as f where f.firstUser = 'snufkin')
+insertNewUser - registerHandler.jsp
+INSERT  into tbluser  values(?,?,?,?,?,?,?,?);
+
+
+check if user exist (pass&user) - checkLogin.jsp
+"SELECT *\n" +
+"FROM tbluser \n" +
+"WHERE username = ? AND password = ?";
+			
+			
+insert post - postHandler
+INSERT  into tblpost (date,content,author) values(?,?,?);
+			

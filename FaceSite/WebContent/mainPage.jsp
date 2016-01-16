@@ -101,7 +101,7 @@
 				</div>
 			</div>
 			<div id="section">
-				<form action="PostHandler.jsp">
+				<form action="PostHandler.jsp" method="post">
 				<label for="write"><b>Write something! :)</b></label> <br>
 				<!--<input type="text" id="write"> -->
 				<textarea name="write" id="write" rows="5" cols="45"></textarea>
