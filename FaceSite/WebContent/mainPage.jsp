@@ -22,6 +22,7 @@
 
  <script type="text/javascript">
 		var currentUserId =	 '<%= session.getAttribute("userid")  %>';	
+		
 </script>
 
 <%
@@ -44,13 +45,13 @@
 	<div id="wrapper">
 		<div id="header">
 			<div class="Logo_class">
-				<a href="mainPage.jsp"> <img src="Pics/Facebook_Logo2.png"
+				<a href="mainPage.jsp" > <img src="Pics/Facebook_Logo2.png"
 					id="logo">
 				</a>
 			</div>
 			<div class="Home_Class">
 				<a href="mainPage.jsp"> <img src="Pics/home.png" id="home">
-				</a> <a href="MainProfile.jsp"> <img src="Pics/profileLogo.png"
+				</a> <a href="MainProfile.jsp" > <img src="Pics/profileLogo.png"
 					id="profileLogo">
 				</a>
 			</div>
@@ -75,8 +76,8 @@
 
 			</div>
 			<div class="LogOut_Class">
-				<a id="logout" href="Login.jsp?action=logout"> <img
-					src="Pics/logout.png" id="logout">
+				<a id="logout" href="Login.jsp?action=logout" > <img
+					src="Pics/logout.png" id="logout" >
 				</a>
 			</div>
 		</div>
