@@ -327,7 +327,7 @@ function getPostDeatails(user){
 	
 	//getFriendsPostsHandler.jsp
 	
-	/*var htmlString = "";
+/*	var htmlString = "";
     $.ajax({
 		url: "getFriendsPostsHandler.jsp",     
 		dataType: "json",	

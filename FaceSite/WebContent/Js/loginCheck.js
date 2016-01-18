@@ -6,7 +6,7 @@ function check()
 	if(user.value == "" || pass.value =="")
 	{
 		var err=document.getElementById("err");
-		err.innerHTML="Username or password are incorrect.";
+		err.innerHTML="Username or password are empty.";
 		err.style.display="inline";
 		err.style.color="Red";
 		return false;

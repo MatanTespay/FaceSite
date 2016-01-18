@@ -10,13 +10,14 @@
 <link rel='stylesheet prefetch'
 	href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/Css/font-awesome.min.css'>
 <link rel="stylesheet" href="Css/loginRegStyle.css">
-<!--  <script src="Js/loginCheck.js" type="text/javascript"></script>-->
+<script src="Js/loginCheck.js" type="text/javascript"></script>
 <script>
 	function register()
 	{
 		window.open("Register.jsp","_self");
 	}
 </script>
+
 
 <% 
     //create a connection and store it in session attribute
@@ -90,7 +91,19 @@
 	<script>
 		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'</script>
 
-
+<%
+	if(request.getParameter("err")!=null)
+	{
+		%>
+			<script>
+			var err=document.getElementById("err");
+			err.innerHTML="Username or password are incorrect.";
+			err.style.display="inline";
+			err.style.color="Red";
+			</script>
+		<% 
+	}
+%>
 
 
 

@@ -19,4 +19,8 @@ public class Queries {
 			+ " facebookdb.tblpost as p inner join tbluser as u"
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
 			+ " where firstuser = ?) order by date desc";
+	
+	public String getUserDetails = "SELECT *\n" +
+			"FROM tbluser \n" +
+			"WHERE username = ?";
 }

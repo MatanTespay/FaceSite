@@ -27,7 +27,6 @@
 		response.sendRedirect("mainPage.jsp");
 	} else {
 		//con.closeConnection();
-		out.println("Invalid password <a href='Login.jsp'>Try again</a>"
-				+ userid + userid);
+		response.sendRedirect("Login.jsp?err=1");
 	}
 %>
