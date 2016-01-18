@@ -60,6 +60,7 @@ function getOnlineFriends() {
 	//get online friends
 	
 	$("#friendsList").empty();
+	$("#pFriendList").empty();
     $.ajax({
         url: "getFriendsHandler.jsp",     
 		dataType: "json",
@@ -73,9 +74,11 @@ function getOnlineFriends() {
 					var res = str.split(" ");
 
 					$("#friendsList").append(
-							"<li><a href=MainProfile.jsp?fname=" + res[0]
-									+ "&lname=" + res[1] + ">" + str
+							"<li><a href=MainProfile.jsp?user=" + item.username
+									 + ">" + str
 									+ "</a></li>");
+					//fill online friends on profile
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
 				}
 

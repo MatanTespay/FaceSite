@@ -9,19 +9,26 @@
 	if(con!=null)
 	{
 		try{
+			String username = request.getParameter("userName");
+			System.out.println("username was sent: "+username);
 			ResultSet rs;
-			String userid = (String)session.getAttribute("userid");
+			//String userid = (String)session.getAttribute("userid");
 			PreparedStatement ps;
 			ps = con.getConnection().prepareStatement(q.getUserDetails);
-			ps.setString(1, userid);
+			ps.setString(1, username);
 			rs = ps.executeQuery();
 			
 			if(rs.next())
 			{
 				JSONObject user = new JSONObject();
-				user.put("FirstName",rs.getString(1));
-				user.put("username",rs.getString(2));
-				user.put("isOnline",rs.getBoolean(3));
+				user.put("FirstName",rs.getString("firstName"));
+				user.put("LastName",rs.getString("lastName"));
+				user.put("profile",rs.getString("profilePic"));
+				user.put("cover",rs.getString("coverPic"));
+				
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(user);
 			}
 			
 			ps.close();
