@@ -9,11 +9,13 @@
 	if(con!=null)
 	{
 		try{
+			String username = request.getParameter("userName");
+			System.out.println("username was sent: "+username);
 			ResultSet rs;
-			String userid = (String)session.getAttribute("userid");
+			//String userid = (String)session.getAttribute("userid");
 			PreparedStatement ps;
 			ps = con.getConnection().prepareStatement(q.getUserDetails);
-			ps.setString(1, userid);
+			ps.setString(1, username);
 			rs = ps.executeQuery();
 			
 			if(rs.next())

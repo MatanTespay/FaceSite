@@ -104,15 +104,18 @@
 			</div>
 			<div id="section">
 				<%
-					if (request.getParameter("fname") != null) {
+					if (request.getParameter("user") != null) {
+						String user = request.getParameter("user");
+						
 				%>
-				<h1>
-					Welcome to the profile of
-					<%
-					out.print(request.getParameter("fname") + " ");
-						out.print(request.getParameter("lname"));
-				%>
-				</h1>
+
+					
+					<script type="text/javascript">
+						var theuser = "<%= user %>";
+						getFullName(theuser); 
+						getPictures(theuser);
+					</script>
+		
 				<%
 					}
 

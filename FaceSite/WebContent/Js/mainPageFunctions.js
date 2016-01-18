@@ -74,11 +74,11 @@ function getOnlineFriends() {
 					var res = str.split(" ");
 
 					$("#friendsList").append(
-							"<li><a href=MainProfile.jsp?fname=" + res[0]
-									+ "&lname=" + res[1] + ">" + str
+							"<li><a href=MainProfile.jsp?user=" + item.username
+									 + ">" + str
 									+ "</a></li>");
 					//fill online friends on profile
-					$("#pFriendList").append("<li><a href=MainProfile.jsp?fname="+res[0]+"&lname="+res[1]+ ">"+str+"</a></li>");
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
 				}
 
@@ -441,8 +441,9 @@ getComments(value);
 function getFullName(userId)
 {
 			$.ajax({
-			url: "ProfileHandler.jsp",     
-			dataType: "json"	,	
+			url: "ProfileHandler.jsp",   
+			dataType: "json",
+			data: 'userName='+userId,
 			success: function(data) {  
 
 			//	 if(value.userId == currentUser)
@@ -464,13 +465,14 @@ function getUsers(id,data,callback) {
     });
 }
 
-function getPictures(){
+function getPictures(userId){
 	var htmlString = "";
  
 
 			$.ajax({
 			url: "ProfileHandler.jsp",     
-			dataType: "json"	,	
+			dataType: "json"	,
+			data: 'userName='+userId,
 			success: function(data) {  
 			//	 if(value.userId == currentUser)
 			//	 {
@@ -785,15 +787,15 @@ $(document).ready(function(){
 	pageX= event.pageX ; pageY= event.pageY;
 	});
 	
-	getData();
+	//getData();
 	//getPostDeatails();
 	
 	getOnlineFriends();
 	
 	setInterval(getOnlineFriends,8000);
 	
-	getFullName(currentUser); //for profile page
-	getPictures();
+	getFullName(currentUserId); //for profile page
+	getPictures(currentUserId);
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');
