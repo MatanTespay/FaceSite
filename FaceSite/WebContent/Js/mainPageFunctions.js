@@ -327,11 +327,12 @@ function getPostDeatails(user){
 	
 	//getFriendsPostsHandler.jsp
 	
-/*	var htmlString = "";
+	var htmlString = "";
     $.ajax({
-		url: "getFriendsPostsHandler.jsp",     
+		url: 'getFriendsPostsHandler.jsp',     
 		dataType: "json",	
 		async: false,
+		type: 'POST',
 		data: 'userName=' + currentUserId,
 		success: function(data) {  
 		 $.each(data, function(i, value) {
@@ -339,7 +340,7 @@ function getPostDeatails(user){
 			var btnID = "#toggle_comment_"+value.postId;
 			var divID = "#comments_div_"+value.postId;
 			htmlString =  "<div id='post_" + value.postId+ "' class='post_class'><div class='post_title><a href='#'><img src="+
-				user.pic +" class='pic_post' border='1px'></a>" + 
+				value.profilePic +" class='pic_post' border='1px'></a>" + 
 				"<span class='userName'>" + value.FullName + "</span><span>says:</span>"
 				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
 				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
@@ -353,10 +354,10 @@ function getPostDeatails(user){
 		error: function(e) {
 			alert("error in getPostDeatails!!!!!");
 		}
-	});*/
+	});
     
    
-	
+	/*
 	var htmlString = "";
     $.ajax({
 		url: "Js/posts.js",     
@@ -383,7 +384,7 @@ function getPostDeatails(user){
 			alert("error in users!!!!!");
 		}
 	});
-	
+	*/
 }
 
 
@@ -783,8 +784,8 @@ $(document).ready(function(){
 	pageX= event.pageX ; pageY= event.pageY;
 	});
 	
-	getData();
-	//getPostDeatails();
+	//getData();
+	getPostDeatails();
 	
 	getOnlineFriends();
 	

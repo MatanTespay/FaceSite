@@ -15,12 +15,12 @@ public class Queries {
 			+ " from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser "
 			+ " where  f.firstUser = ?)";
 
-	public String getFriendsPosts = "SELECT CONCAT(u.firstName, ' ', u.lastName) as 'FullName',p.* FROM "
+	public String getFriendsPosts = "SELECT CONCAT(u.firstName, ' ', u.lastName) as 'FullName' ,u.profilePic "
+			+ " ,p.postId , DATE_FORMAT(p.date , '%d/%m/%y') as date, p.content, p.author FROM "
 			+ " facebookdb.tblpost as p inner join tbluser as u"
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
 			+ " where firstuser = ?) order by date desc";
-	
-	public String getUserDetails = "SELECT *\n" +
-			"FROM tbluser \n" +
-			"WHERE username = ?";
+
+	public String getUserDetails = "SELECT *\n" + "FROM tbluser \n"
+			+ "WHERE username = ?";
 }
