@@ -19,9 +19,14 @@
 			if(rs.next())
 			{
 				JSONObject user = new JSONObject();
-				user.put("FirstName",rs.getString(1));
-				user.put("username",rs.getString(2));
-				user.put("isOnline",rs.getBoolean(3));
+				user.put("FirstName",rs.getString("firstName"));
+				user.put("LastName",rs.getString("lastName"));
+				user.put("profile",rs.getString("profilePic"));
+				user.put("cover",rs.getString("coverPic"));
+				
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(user);
 			}
 			
 			ps.close();

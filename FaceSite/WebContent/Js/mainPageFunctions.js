@@ -60,6 +60,7 @@ function getOnlineFriends() {
 	//get online friends
 	
 	$("#friendsList").empty();
+	$("#pFriendList").empty();
     $.ajax({
         url: "getFriendsHandler.jsp",     
 		dataType: "json",
@@ -76,6 +77,8 @@ function getOnlineFriends() {
 							"<li><a href=MainProfile.jsp?fname=" + res[0]
 									+ "&lname=" + res[1] + ">" + str
 									+ "</a></li>");
+					//fill online friends on profile
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?fname="+res[0]+"&lname="+res[1]+ ">"+str+"</a></li>");
 
 				}
 
@@ -83,7 +86,7 @@ function getOnlineFriends() {
 			 
         },
         error: function(e) {
-			alert("error in getOnlineFriends!!!!!");
+			alert("error in getOnlineFriends!");
         }
     });
     
@@ -438,13 +441,13 @@ getComments(value);
 function getFullName(userId)
 {
 			$.ajax({
-			url: "Js/users.js",     
+			url: "ProfileHandler.jsp",     
 			dataType: "json"	,	
 			success: function(data) {  
-			 $.each(data.users, function(i, value) {
-				 if(value.userId == currentUser)
-					$('#fullName').append(value.fname+" "+value.lname);
-				});
+
+			//	 if(value.userId == currentUser)
+					$('#fullName').append(data.FirstName+" "+data.LastName);
+
 			},
 			error: function(e) {
 				alert("error in getFullName!!!!!");
@@ -466,20 +469,19 @@ function getPictures(){
  
 
 			$.ajax({
-			url: "Js/users.js",     
+			url: "ProfileHandler.jsp",     
 			dataType: "json"	,	
 			success: function(data) {  
-			 $.each(data.users, function(i, value) {
-				 if(value.userId == currentUser)
-				 {
-					htmlString =  "<img class=cover src="+value.cover+">"+
-					 "<img class=profile src="+value.pic+">";
+			//	 if(value.userId == currentUser)
+			//	 {
+					htmlString =  "<img class=cover src="+data.cover+">"+
+					 "<img class=profile src="+data.profile+">";
 					 $('.profilePics').append(htmlString);
-				 }
-				});
+			//	 }
+
 			},
 			error: function(e) {
-				alert("error in getPictures!!!!!");
+				alert("error in getPictures!");
 			}
 		});
 	
