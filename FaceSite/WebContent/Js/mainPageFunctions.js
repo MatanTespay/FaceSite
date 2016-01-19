@@ -474,7 +474,7 @@ function getFullName(userId)
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
-			data: 'userName='+userid,
+			data: 'userName='+userId,
 			success: function(data) {  
 				$('#fullName').append(data.FirstName+" "+data.LastName);
 
@@ -494,14 +494,14 @@ function getUsers(id,data,callback) {
     });
 }
 
-function getPictures(userid){
+function getPictures(userId){
 	var htmlString = "";
 	 $('.profilePics').empty();
 
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
-			data: 'userName='+userid,
+			data: 'userName='+userId,
 			success: function(data) {  
 					htmlString =  "<img class=cover src="+data.cover+">"+
 					 "<img class=profile src="+data.profile+">";
