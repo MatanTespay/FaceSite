@@ -91,6 +91,34 @@ function getOnlineFriends() {
         }
     });
     
+    function getOnlineFriendsForUsers(userid) {
+    	//get online friends
+    	$("#pFriendList").empty();
+        $.ajax({
+            url: "getFriendsHandler.jsp",     
+    		dataType: "json",
+    		data: 'userName='+userid, 
+            success: function(data) {  
+            	
+    				$.each(data, function(j, item) {
+    				// console.log(item.fname + " " + item.lname);
+    				if (item.isOnline) {
+    					var str = item.FullName;
+    					var res = str.split(" ");
+
+    					//fill online friends on profile
+    					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+
+    				}
+
+    			});
+    			 
+            },
+            error: function(e) {
+    			alert("error in getOnlineFriends!!!!!");
+            }
+        });
+    }
     
 	/*$("#friendsList").empty();
     $.ajax({
@@ -444,16 +472,15 @@ function getFullName(userId)
 {
 	$('#fullName').empty();
 			$.ajax({
-			url: "Js/users.js",     
-			dataType: "json"	,	
+			url: "ProfileHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+userid,
 			success: function(data) {  
-			 $.each(data.users, function(i, value) {
-				 if(value.userId == currentUser)
-					$('#fullName').append(value.fname+" "+value.lname);
-				});
+				$('#fullName').append(data.FirstName+" "+data.LastName);
+
 			},
 			error: function(e) {
-				alert("error in getFullName!!!!!");
+				alert("error in getFullName!");
 			}
 		});
 }
@@ -467,25 +494,21 @@ function getUsers(id,data,callback) {
     });
 }
 
-function getPictures(){
+function getPictures(userid){
 	var htmlString = "";
 	 $('.profilePics').empty();
 
 			$.ajax({
-			url: "Js/users.js",     
-			dataType: "json"	,	
+			url: "ProfileHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+userid,
 			success: function(data) {  
-			 $.each(data.users, function(i, value) {
-				 if(value.userId == currentUser)
-				 {
-					htmlString =  "<img class=cover src="+value.cover+">"+
-					 "<img class=profile src="+value.pic+">";
+					htmlString =  "<img class=cover src="+data.cover+">"+
+					 "<img class=profile src="+data.profile+">";
 					 $('.profilePics').append(htmlString);
-				 }
-				});
 			},
 			error: function(e) {
-				alert("error in getPictures!!!!!");
+				alert("error in getPictures!");
 			}
 		});
 	
@@ -796,8 +819,8 @@ $(document).ready(function(){
 	
 	setInterval(getOnlineFriends,8000);
 	
-	getFullName(currentUser); //for profile page
-	getPictures();
+	getFullName(currentUserId); //for profile page
+	getPictures(currentUserId);
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');

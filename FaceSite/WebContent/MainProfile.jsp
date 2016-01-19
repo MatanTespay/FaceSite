@@ -129,6 +129,7 @@
 						var theuser = "<%= user %>";
 						getFullName(theuser); 
 						getPictures(theuser);
+						getOnlineFriendsForUsers(theuser);
 					</script>
 		
 				<%
