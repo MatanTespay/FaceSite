@@ -90,35 +90,7 @@ function getOnlineFriends() {
 			alert("error in getOnlineFriends!!!!!");
         }
     });
-    
-   function getOnlineFriendsForUsers(userid) {
-    	//get online friends
-    	$("#pFriendList").empty();
-        $.ajax({
-            url: "getFriendsHandler.jsp",     
-    		dataType: "json",
-    		data: 'userName='+userid, 
-            success: function(data) {  
-            	
-    				$.each(data, function(j, item) {
-    				// console.log(item.fname + " " + item.lname);
-    				if (item.isOnline) {
-    					var str = item.FullName;
-    					var res = str.split(" ");
-
-    					//fill online friends on profile
-    					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
-
-    				}
-
-    			});
-    			 
-            },
-            error: function(e) {
-    			alert("error in getOnlineFriends!!!!!");
-            }
-        });
-    }
+   
     
 	/*$("#friendsList").empty();
     $.ajax({
@@ -159,6 +131,37 @@ function getOnlineFriends() {
         }
     });*/
 }
+
+
+function getOnlineFriendsForUsers(userid) {
+	//get online friends
+	$("#pFriendList").empty();
+    $.ajax({
+        url: "getFriendsHandler.jsp",     
+		dataType: "json",
+		data: 'userName='+userid, 
+        success: function(data) {  
+        	
+				$.each(data, function(j, item) {
+				// console.log(item.fname + " " + item.lname);
+				if (item.isOnline) {
+					var str = item.FullName;
+					var res = str.split(" ");
+
+					//fill online friends on profile
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+
+				}
+
+			});
+			 
+        },
+        error: function(e) {
+			alert("error in getOnlineFriends!!!!!");
+        }
+    });
+}
+
 
 //adding friend with ajax to DB,and get result of action
 function addFriend(friendName){
