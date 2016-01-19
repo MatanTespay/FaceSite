@@ -19,35 +19,34 @@
 </script>
 
 
-<% 
+ <% 
     //create a connection and store it in session attribute
-	coreservlets.MyConnection con = new coreservlets.MyConnection();
-	session.setAttribute("connection", con);
+	coreservlets.MyConnection con ;
+	
 
-%>
+%> 
 
 <%
 	
 	if (request.getParameter("action") != null) {
 		if (request.getParameter("action").equals("logout")) {
 			session.setAttribute("userid", null);
+			if(session.getAttribute("connection") != null){
+				
 			
 			//get the connection
 			con = (coreservlets.MyConnection)session.getAttribute("connection");
 			if(con!=null) //close the connection on logout
 			{
 				//TODO: change this...
-			/*	con.closeConnection();
-				session.setAttribute("connection", null);*/
+				con.closeConnection();
+				session.setAttribute("connection", null);
 			}
 			
 			request.getSession().invalidate();
-		/* %>
-			 <script type="text/javascript">
-			 alert("session cleaned: " +  '<%= session.getAttribute("userid")  %>');
-			 // test first commit from shanny 
-			 </script>
-			 <% */
+		 
+		
+		   }
 		}
 	}
 %>

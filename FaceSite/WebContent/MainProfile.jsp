@@ -103,6 +103,21 @@
 				</div>
 			</div>
 			<div id="section">
+				<!--Profile Content -->
+				<div class="profilePics"></div>
+
+				<div id="fullName"></div>
+
+				<div id="pFriendListDiv">
+					<br>
+					<h2>
+						<span id="titleFirends">List of Friends</span>
+					</h2>
+					<ul id="pFriendList">
+					</ul>
+				</div>
+			</div>
+				
 				<%
 					if (request.getParameter("user") != null) {
 						String user = request.getParameter("user");
@@ -119,25 +134,8 @@
 				<%
 					}
 
-					else {
 				%>
-				<!--Profile Content -->
-				<div class="profilePics"></div>
 
-				<div id="fullName"></div>
-
-				<div id="pFriendListDiv">
-					<br>
-					<h2>
-						<span id="titleFirends">List of Friends</span>
-					</h2>
-					<ul id="pFriendList">
-					</ul>
-				</div>
-			</div>
-			<%
-				}
-			%>
 
 		</div>
 		<!-- #content -->

@@ -5,6 +5,7 @@ var currentUser = 1;
 
 var pageX, pageY;
 
+
 //this function not in use anymore !!!
 function getData() {
 	//get online friends
@@ -441,6 +442,7 @@ getComments(value);
 
 function getFullName(userId)
 {
+	$('#fullName').empty();
 			$.ajax({
 			url: "Js/users.js",     
 			dataType: "json"	,	
@@ -467,7 +469,7 @@ function getUsers(id,data,callback) {
 
 function getPictures(){
 	var htmlString = "";
- 
+	 $('.profilePics').empty();
 
 			$.ajax({
 			url: "Js/users.js",     

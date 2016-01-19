@@ -3,7 +3,18 @@
 <%@ page import="java.sql.*"%>
 <%
 	String insert = "INSERT  into tbluser  values(?,?,?,?,?,?,?,?);";
-	coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
+	//coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
+	
+	coreservlets.MyConnection con = new coreservlets.MyConnection();
+	if(session.getAttribute("connection") != null){
+		con  = (coreservlets.MyConnection)session.getAttribute("connection");
+	}
+	else{
+		con = new coreservlets.MyConnection();
+		session.setAttribute("connection", con);
+	}
+	
+	
 	if(con!=null)
 	{
 		try{
