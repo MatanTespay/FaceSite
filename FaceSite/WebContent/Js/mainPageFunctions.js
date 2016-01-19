@@ -91,7 +91,7 @@ function getOnlineFriends() {
         }
     });
     
-    function getOnlineFriendsForUsers(userid) {
+   function getOnlineFriendsForUsers(userid) {
     	//get online friends
     	$("#pFriendList").empty();
         $.ajax({
