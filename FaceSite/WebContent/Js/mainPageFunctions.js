@@ -90,7 +90,7 @@ function getOnlineFriends() {
 			alert("error in getOnlineFriends!!!!!");
         }
     });
-    
+}
    function getOnlineFriendsForUsers(userid) {
     	//get online friends
     	$("#pFriendList").empty();
@@ -158,7 +158,7 @@ function getOnlineFriends() {
 			alert("error in friends!!!!!");
         }
     });*/
-}
+
 
 //adding friend with ajax to DB,and get result of action
 function addFriend(friendName){
