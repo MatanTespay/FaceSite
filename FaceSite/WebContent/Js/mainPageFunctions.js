@@ -90,6 +90,7 @@ function getOnlineFriends() {
 			alert("error in getOnlineFriends!!!!!");
         }
     });
+<<<<<<< HEAD
 }
    function getOnlineFriendsForUsers(userid) {
     	//get online friends
@@ -119,6 +120,9 @@ function getOnlineFriends() {
             }
         });
     }
+=======
+   
+>>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
     
 	/*$("#friendsList").empty();
     $.ajax({
@@ -158,7 +162,41 @@ function getOnlineFriends() {
 			alert("error in friends!!!!!");
         }
     });*/
+<<<<<<< HEAD
 
+=======
+}
+
+
+function getOnlineFriendsForUsers(userid) {
+	//get online friends
+	$("#pFriendList").empty();
+    $.ajax({
+        url: "getFriendsHandler.jsp",     
+		dataType: "json",
+		data: 'userName='+userid, 
+        success: function(data) {  
+        	
+				$.each(data, function(j, item) {
+				// console.log(item.fname + " " + item.lname);
+				if (item.isOnline) {
+					var str = item.FullName;
+					var res = str.split(" ");
+
+					//fill online friends on profile
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+
+				}
+
+			});
+			 
+        },
+        error: function(e) {
+			alert("error in getOnlineFriends!!!!!");
+        }
+    });
+}
+>>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
 
 
 //adding friend with ajax to DB,and get result of action
@@ -467,7 +505,7 @@ function getFullName(userId)
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
-			data: 'userName='+userid,
+			data: 'userName='+userId,
 			success: function(data) {  
 				$('#fullName').append(data.FirstName+" "+data.LastName);
 
@@ -487,14 +525,14 @@ function getUsers(id,data,callback) {
     });
 }
 
-function getPictures(userid){
+function getPictures(userId){
 	var htmlString = "";
 	 $('.profilePics').empty();
 
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
-			data: 'userName='+userid,
+			data: 'userName='+userId,
 			success: function(data) {  
 					htmlString =  "<img class=cover src="+data.cover+">"+
 					 "<img class=profile src="+data.profile+">";
