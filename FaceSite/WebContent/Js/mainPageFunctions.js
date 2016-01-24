@@ -90,7 +90,7 @@ function getOnlineFriends() {
 			alert("error in getOnlineFriends!!!!!");
         }
     });
-<<<<<<< HEAD
+
 }
    function getOnlineFriendsForUsers(userid) {
     	//get online friends
@@ -120,83 +120,7 @@ function getOnlineFriends() {
             }
         });
     }
-=======
-   
->>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
-    
-	/*$("#friendsList").empty();
-    $.ajax({
-        url: "Js/friends.js",     
-		dataType: "json"	,	
-        success: function(data) {  
-         $.each(data.friends, function(i,item) {
-						 
-				if(item.userId == currentUser){
-					 $.each(item.userfriends, function(k,friend) {
-						 //console.log(friend.userId);
-						 $.ajax({
-						url: "Js/users.js",     
-						dataType: "json"	,	
-						success: function(data) {  
-						 $.each(data.users, function(j,item) {
-							//console.log(item.fname + " " + item.lname);
-							if(item.userId == currentUser){
-								return;
-							}else{
-								var name = item.fname + " " + item.lname;
-								if(item.userId == friend.userId && item.isOn=="1"){ //show only online friends for index
-									$("#friendsList").append("<li><a href=MainProfile.jsp?fname="+item.fname+"&lname="+item.lname+ ">"+name+"</a></li>");
 
-								}
-
-							}
-							});
-						},
-					});
-					});
-					
-				}
-            });
-        },
-        error: function(e) {
-			alert("error in friends!!!!!");
-        }
-    });*/
-<<<<<<< HEAD
-
-=======
-}
-
-
-function getOnlineFriendsForUsers(userid) {
-	//get online friends
-	$("#pFriendList").empty();
-    $.ajax({
-        url: "getFriendsHandler.jsp",     
-		dataType: "json",
-		data: 'userName='+userid, 
-        success: function(data) {  
-        	
-				$.each(data, function(j, item) {
-				// console.log(item.fname + " " + item.lname);
-				if (item.isOnline) {
-					var str = item.FullName;
-					var res = str.split(" ");
-
-					//fill online friends on profile
-					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
-
-				}
-
-			});
-			 
-        },
-        error: function(e) {
-			alert("error in getOnlineFriends!!!!!");
-        }
-    });
-}
->>>>>>> branch 'master' of https://github.com/MatanTespay/FaceSite.git
 
 
 //adding friend with ajax to DB,and get result of action
@@ -226,6 +150,32 @@ function addFriend(friendName){
 	
 	
 }
+
+function addComment(postId, content){
+	$.ajax({
+		url:'insertCommentHandler.jsp',
+		async: false,
+		type: 'POST',
+		datatype: 'json',
+		data: 'post=' + postId + '&content=' + content + '&userName='+currentUserId ,
+		success: function(data){
+			
+			 	if(data.result){
+			 	
+			 		//getOnlineFriends();
+			 	}
+			 	else{
+			 		alert('Opps..!!');
+			 	}
+		},
+		error: function(e) {
+			alert("error in ajax adding friend");
+		}
+	});
+	
+	
+}
+
 //function to get all Users when we use the search input
 function getAllUsers(userName){
 	
@@ -481,11 +431,8 @@ var htmlString = "";
 
 					
 					}
-					$(divID).append("<div><input type='text' size='60' style='margin-right:5px;' value="+postId+"><a href='javascript:void(0);'>comment</a></div>");
+					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' value="+postId+"><a href='javascript:void(0);'>comment</a></div>");
 
-
-			
-		  
 			  
 			},
 			error: function(e) {

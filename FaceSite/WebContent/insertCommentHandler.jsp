@@ -7,7 +7,7 @@
 
 
 <%
-/* 	Queries q = new Queries();
+ 	Queries q = new Queries();
  
 	coreservlets.MyConnection con = (coreservlets.MyConnection)session.getAttribute("connection");
 	
@@ -18,34 +18,26 @@
 			boolean res;
 			String postid = request.getParameter("post");
 			String content = request.getParameter("content");
+			String user = request.getParameter("userName");
 			JSONObject data = new JSONObject();
 			
 			PreparedStatement ps;
 			ps = con.getConnection().prepareStatement(q.insertComment);
 			
-			ps.setString(1, user); //the user
-			ps.setString(2, friend); // the friend
+			ps.setInt(1, Integer.parseInt("post")); 
+			ps.setString(2, content); 
+			ps.setString(3, user);
 		
 			int result = ps.executeUpdate();
 						
-			if(result > 0){
-				res = true;
-				ps.setString(1, friend); //the user
-				ps.setString(2, user); // the friend
-				 result = ps.executeUpdate();
+
 				 if(result > 0){
 					 data.put("result",true);
 					
 				 }else{
 					 data.put("result",false);
 				 }
-			
-			}
-			else{
-				res = false;
-				data.put("result",false);
-			}
-			
+
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(data);
@@ -55,5 +47,5 @@
 		{
 			System.out.println(e.getMessage());
 		}
-	} */
+	} 
 %>
