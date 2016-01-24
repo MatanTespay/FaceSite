@@ -518,8 +518,9 @@ function getPictures(userid){
 function getMsgData(){
 	
 	$.ajax({
-			url: "Js/messages.js",     
-			dataType: "json"	,	
+			url: "MessageHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+currentUserId,
 			success: function(data) {  
 					$.each(data.messages, function(i, data) {
 						if(currentUser != data.userId){
@@ -552,7 +553,7 @@ function getMsgData(){
 					});
 			},
 			error: function(e) {
-				alert("error in msg data !!!!!" + e);
+				alert("error in msg data!" + e);
 			}
 		});
 		
