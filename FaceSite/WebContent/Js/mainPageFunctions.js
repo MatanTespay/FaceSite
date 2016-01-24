@@ -357,7 +357,7 @@ function searchFriends () {
 }
 
 function getPostDeatails(user){
-	
+	$('#postList').empty();
 	//getFriendsPostsHandler.jsp
 	
 	var htmlString = "";
@@ -377,7 +377,8 @@ function getPostDeatails(user){
 				"<span class='userName'>" + value.FullName + "</span><span>says:</span>"
 				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
 				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
-				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a href='javascript:void(0);'>comment</a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div><div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
+				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" +
+						"<div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
 				
 			
 									
@@ -424,42 +425,33 @@ function getPostDeatails(user){
 function getComments(postId){
 var htmlString = "";
         $.ajax({
-			url: "Js/comments.js",     
-			dataType: "json"	,	
+			url: "getCommentHandler.jsp",     
+			dataType: "json",
+			data: 'post=' + postId,
 			success: function(data) {
 			 var divID = '#comments_div_'+postId;			
-			 $.each(data.comments, function(i, value) {
-				if(value.postId != postId)
-					return;
-				 
-				getUsers(postId,value.postComments, function(result) {
-					var users = result.users;
 					
-					for (i = 0; i < value.postComments.length; i++) { 
-						for (j = 0; j < users.length; j++) { 
+					for (var i = 0; i < data.length; i++) { 
 						
-							if(value.postComments[i].userId == users[j].userId){
-							//var divID = '#comments_div_'+value.postId;	
-							console.log((users[j].fname + " " + users[j].lname));
-							htmlString =  "<div class='comment_class'><div class='comment_title><a href='#'><img class='images_size' src="+
-							users[j].pic +" class='pic_post' border='1px'></a><span class='userName'>" 
-							+ (users[j].fname + " " + users[j].lname) + "</span><span>: " +value.postComments[i].content +"</span></div></div>"; 
-							//$('#post_'+postId).append(htmlString);
-							$(divID).append(htmlString);
-							
-							}
-						}
-					}
+						//var divID = '#comments_div_'+value.postId;	
+						//console.log((users[j].fname + " " + users[j].lname));
+						htmlString =  "<div class='comment_class'><div class='comment_title'><a href='#'><img class='images_size' src="+
+						data[i].pic +" class='pic_post' border='1px'></a><span class='userName'>" 
+						+ (data[i].FirstName + " " + data[i].LastName) + "</span><span>: " +data[i].content +"</span></div></div>"; 
+						//$('#post_'+postId).append(htmlString);
+						$(divID).append(htmlString);
+
 					
-				});
-				 
-				});
+					}
+					$(divID).append("<div><input type='text' size='60' style='margin-right:5px;' value="+postId+"><a href='javascript:void(0);'>comment</a></div>");
+
+
 			
 		  
 			  
 			},
 			error: function(e) {
-				alert("error in getComments!!!!!");
+				alert("error in getComments!");
 			}
 		});
 }
@@ -787,6 +779,7 @@ $(document).ready(function(){
 	
 	//getData();
 	getPostDeatails();
+	$("#btnPost").click(getPostDeatails());
 	
 	getOnlineFriends();
 	

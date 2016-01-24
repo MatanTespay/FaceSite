@@ -19,15 +19,22 @@ public class Queries {
 			+ " ,p.postId , DATE_FORMAT(p.date , '%d/%m/%y') as date, p.content, p.author FROM "
 			+ " facebookdb.tblpost as p inner join tbluser as u"
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
-			+ " where firstuser = ?) order by date desc";
+			+ " where firstuser = ?) || p.author=? order by date desc"; // <<added || p.author=?
 
 	public String getUserDetails = "SELECT *\n" + "FROM tbluser \n"
 			+ "WHERE username = ?";
 	
-	public String getMessages = "SELECT content,  firstName, lastName"
-			+ "FROM tblmessage inner join tbluser on fromUser=username"
+	public String getMessages = "SELECT content,  firstName, lastName\n"
+			+ "FROM tblmessage inner join tbluser on fromUser=username\n"
 			+ "where toUser=?;";
 	
-	public String getNotif = "SELECT firstName, lastName, content"
+	public String getNotif = "SELECT firstName, lastName, content\n"
 			+ "FROM tblnotification inner join tbluser on username=userOwner;";
+	
+	public String getComments = "SELECT firstName,lastName,content, profilePic "
+			+ " FROM facebookdb.tblcomment inner join tbluser on author=username"
+			+ " where postId=?;";
+	
+	public String insertComment = "INSERT INTO `facebookdb`.`tblcomment`\n"
+			+ "(`postId`,`content`,`author`) VALUES (?,?,?);";
 }

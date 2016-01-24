@@ -31,7 +31,7 @@
 				JSONObject notif = new JSONObject();
 				notif.put("FirstName",rs.getString("firstName"));
 				notif.put("LastName",rs.getString("lastName"));
-				notif.put("content",rs.getBoolean("content"));
+				notif.put("content",rs.getString("content"));
 				
 				notifList.add(notif);
 				

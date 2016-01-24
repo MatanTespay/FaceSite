@@ -14,34 +14,35 @@
 	if(con!=null)
 	{
 		try{
-			//
+
+			String postid = request.getParameter("post");
 			
-			String userName = request.getParameter("userName");
-			JSONArray msgList = new JSONArray();
+			JSONArray commentList = new JSONArray();
 			
 			PreparedStatement ps;
-			ps = con.getConnection().prepareStatement(q.getMessages);
+			ps = con.getConnection().prepareStatement(q.getComments);
 			ResultSet rs;
 			
-			ps.setString(1, userName); 
+			ps.setInt(1, Integer.parseInt(postid)); 
 			
 			
 			rs = ps.executeQuery();
 						
 			while(rs.next()){
-				JSONObject message = new JSONObject();
-				message.put("FirstName",rs.getString("firstName"));
-				message.put("LastName",rs.getString("lastName"));
-				message.put("content",rs.getString("content"));
-				
-				msgList.add(message);
+				JSONObject comment = new JSONObject();
+				comment.put("FirstName",rs.getString("firstName"));
+				comment.put("LastName",rs.getString("lastName"));
+				comment.put("content",rs.getString("content"));
+				comment.put("pic",rs.getString("profilePic"));
+
+				commentList.add(comment);
 				
 			}
 		    	
 			//System.out.print(usersList + "\n");
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().print(msgList);
+			response.getWriter().print(commentList);
 			
 		}
 		catch(SQLException e)
