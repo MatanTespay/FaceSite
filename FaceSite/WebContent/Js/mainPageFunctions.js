@@ -548,7 +548,7 @@ function getNotifData(){
 
 			},
 			error: function(e) {
-				alert("error in getNotifData!!!!!" + e);
+				alert("error in getNotifData!" + e);
 			}
 		});
 		
