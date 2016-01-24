@@ -522,34 +522,10 @@ function getMsgData(){
 			dataType: "json",
 			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.messages, function(i, data) {
-						if(currentUser != data.userId){
-						return;	
-						}
-						$.each(data.userMesseges, function(k, message) {
-							$.ajax({
-									url: "Js/users.js",     
-									dataType: "json"	,	
-									success: function(data) {  
-									 $.each(data.users, function(j,user) {		
-										if(user.userId == currentUser){
-											return;
-										}else{ 
-											
-											if(user.userId == message.fromUser) 
-											{
-												
-												$("#msgDropDown table").append('<tr><td class="td_text"><span><b>' + user.fname + " " + user.lname + ': </b></span></td><td class="td_text">' + message.content + '</td></tr>');
-												
-											}
-										}
-										});
-									},
-									error: function(e) {
-										alert("error in msg data in!!!!!" + e);
-									}
-							});
-						});
+					$.each(data.msgList, function(i, msg) {
+						$("#msgDropDown table").append('<tr><td class="td_text"><span><b>' + msg.FirstName + " " + msg.LastName + ': </b></span></td><td class="td_text">' 
+								+ msg.content + '</td></tr>');
+						
 					});
 			},
 			error: function(e) {
@@ -561,20 +537,15 @@ function getMsgData(){
 
 function getNotifData(){
 	$.ajax({
-			url: "Js/notifications.js",     
-			dataType: "json"	,	
+			url: "NotifHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.notifications, function(i, item) {
-						if(currentUser != item.userId){
-						return;	
-						}
-						$.each(item.userNotifications, function(k, notif) {
-							$("#NotifDropDown table").append('<tr class="border_bottom"><td class="td_text"><span>' + notif.content + '</span></td></tr>');
-							
-							
+					$.each(data.notifList, function(i, notif) {
+						$("#NotifDropDown table").append('<tr class="border_bottom"><td class="td_text"><span>' + notif.content + '</span></td></tr>');
 							//$("#NotifDropDown ul").append("<li>"+ notif.content +"</li>");
 						});
-					});
+
 			},
 			error: function(e) {
 				alert("error in getNotifData!!!!!" + e);
