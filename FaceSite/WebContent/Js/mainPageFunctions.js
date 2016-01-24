@@ -160,6 +160,7 @@ function getOnlineFriends() {
     });*/
 
 
+
 //adding friend with ajax to DB,and get result of action
 function addFriend(friendName){
 	
@@ -821,6 +822,7 @@ $(document).ready(function(){
 	
 	getFullName(currentUserId); //for profile page
 	getPictures(currentUserId);
+	
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');

@@ -23,4 +23,11 @@ public class Queries {
 
 	public String getUserDetails = "SELECT *\n" + "FROM tbluser \n"
 			+ "WHERE username = ?";
+	
+	public String getMessages = "SELECT content,  firstName, lastName"
+			+ "FROM tblmessage inner join tbluser on fromUser=username"
+			+ "where toUser=?;";
+	
+	public String getNotif = "SELECT firstName, lastName, content"
+			+ "FROM tblnotification inner join tbluser on username=userOwner;";
 }
