@@ -23,6 +23,7 @@
 
 <script type="text/javascript">
 		var currentUserId =	 '<%=session.getAttribute("userid")%>';
+		//alert(displyUserId);
 </script>
 
 <%
@@ -37,6 +38,11 @@
 		response.sendRedirect("Login.jsp");
 		return;
 	}
+
+if (session.getAttribute("userid") == null) {
+	response.sendRedirect("Login.jsp");
+	return;
+}
 %>
 </head>
 
@@ -52,7 +58,7 @@
 			<div class="Home_Class">
 				<a href="mainPage.jsp"> <img src="Pics/home.png"
 					id="profileLogo">
-				</a> <a href="MainProfile.jsp"> <img src="Pics/profileLogo.png"
+				</a> <a href='MainProfile.jsp?user=<%= session.getAttribute("userid") %>'  > <img src="Pics/profileLogo.png" 
 					id="profileLogo">
 				</a>
 			</div>

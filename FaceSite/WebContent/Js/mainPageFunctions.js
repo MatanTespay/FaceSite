@@ -2,7 +2,7 @@ var _users;
 var _users;
 var _friends;
 var currentUser = 1;
-
+var displyUserId;
 var pageX, pageY;
 
 
@@ -75,11 +75,11 @@ function getOnlineFriends() {
 					var res = str.split(" ");
 
 					$("#friendsList").append(
-							"<li><a href=MainProfile.jsp?user=" + item.username
-									 + ">" + str
+							"<li><a  href=MainProfile.jsp?user=" + item.username
+									 + " >" + str
 									+ "</a></li>");
 					//fill online friends on profile
-					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+					$("#pFriendList").append("<li><a  href=MainProfile.jsp?user="+item.username+" >"+str+"</a></li>");
 
 				}
 
@@ -149,7 +149,7 @@ function getOnlineFriendsForUsers(userid) {
 					var res = str.split(" ");
 
 					//fill online friends on profile
-					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+					$("#pFriendList").append("<li><a  href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
 				}
 
@@ -473,10 +473,12 @@ getComments(value);
 
 function getFullName(userId)
 {
+	
 	$('#fullName').empty();
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
+			
 			data: 'userName='+userId,
 			success: function(data) {  
 				$('#fullName').append(data.FirstName+" "+data.LastName);
@@ -498,6 +500,8 @@ function getUsers(id,data,callback) {
 }
 
 function getPictures(userId){
+	
+	
 	var htmlString = "";
 	 $('.profilePics').empty();
 
@@ -505,6 +509,7 @@ function getPictures(userId){
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
 			data: 'userName='+userId,
+			
 			success: function(data) {  
 					htmlString =  "<img class=cover src="+data.cover+">"+
 					 "<img class=profile src="+data.profile+">";
@@ -811,6 +816,7 @@ function customAutoComplete(){
 }
 
 $(document).ready(function(){
+
 	$( document ).on( "mousemove", function( event ) {
 	pageX= event.pageX ; pageY= event.pageY;
 	});
@@ -822,8 +828,8 @@ $(document).ready(function(){
 	
 	setInterval(getOnlineFriends,8000);
 	
-	getFullName(currentUserId); //for profile page
-	getPictures(currentUserId);
+	//getFullName(currentUserId); //for profile page
+	//getPictures(currentUserId);
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');

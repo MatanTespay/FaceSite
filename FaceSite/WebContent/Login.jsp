@@ -71,9 +71,9 @@
 		<div class="form">
 			<h2>Login to your account</h2>
 			<form onsubmit="return check()" method="post" action="checkLogin.jsp">
-				<input type="text" name="user" placeholder="Username" id="user">
+				<input type="text" tabindex="1" name="user" placeholder="Username" id="user">
 
-				<input type="password" name="pass" placeholder="Password" id="pass">
+				<input type="password" tabindex="2" name="pass" placeholder="Password" id="pass">
 
 				<div id="err"></div>
 

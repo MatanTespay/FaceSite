@@ -1,3 +1,4 @@
+<%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
@@ -22,6 +23,7 @@
 
  <script type="text/javascript">
 		var currentUserId =	 '<%= session.getAttribute("userid")  %>';	
+		
 		
 </script>
 
@@ -51,7 +53,7 @@
 			</div>
 			<div class="Home_Class">
 				<a href="mainPage.jsp"> <img src="Pics/home.png" id="home">
-				</a> <a href="MainProfile.jsp" > <img src="Pics/profileLogo.png"
+				</a> <a href='MainProfile.jsp?user=<%= session.getAttribute("userid") %>'  > <img src="Pics/profileLogo.png"
 					id="profileLogo">
 				</a>
 			</div>

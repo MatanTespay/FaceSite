@@ -18,7 +18,7 @@
 			ps.setString(3, userid);
 			ps.executeUpdate();
 			ps.close();
-
+	
 			response.sendRedirect("mainPage.jsp");
 		}
 		catch(SQLException e)
