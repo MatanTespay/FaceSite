@@ -29,7 +29,7 @@
 			ResultSet rs;
 			
 			ps.setString(1, userName); // ignore the user from th list in users
-			
+			ps.setString(2, userName); // <<added this
 			
 			rs = ps.executeQuery();
 			 

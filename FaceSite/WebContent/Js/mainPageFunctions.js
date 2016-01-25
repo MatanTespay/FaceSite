@@ -2,7 +2,7 @@ var _users;
 var _users;
 var _friends;
 var currentUser = 1;
-var displyUserId;
+
 var pageX, pageY;
 
 
@@ -75,11 +75,11 @@ function getOnlineFriends() {
 					var res = str.split(" ");
 
 					$("#friendsList").append(
-							"<li><a  href=MainProfile.jsp?user=" + item.username
-									 + " >" + str
+							"<li><a href=MainProfile.jsp?user=" + item.username
+									 + ">" + str
 									+ "</a></li>");
 					//fill online friends on profile
-					$("#pFriendList").append("<li><a  href=MainProfile.jsp?user="+item.username+" >"+str+"</a></li>");
+					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
 				}
 
@@ -90,77 +90,37 @@ function getOnlineFriends() {
 			alert("error in getOnlineFriends!!!!!");
         }
     });
-   
-    
-	/*$("#friendsList").empty();
-    $.ajax({
-        url: "Js/friends.js",     
-		dataType: "json"	,	
-        success: function(data) {  
-         $.each(data.friends, function(i,item) {
-						 
-				if(item.userId == currentUser){
-					 $.each(item.userfriends, function(k,friend) {
-						 //console.log(friend.userId);
-						 $.ajax({
-						url: "Js/users.js",     
-						dataType: "json"	,	
-						success: function(data) {  
-						 $.each(data.users, function(j,item) {
-							//console.log(item.fname + " " + item.lname);
-							if(item.userId == currentUser){
-								return;
-							}else{
-								var name = item.fname + " " + item.lname;
-								if(item.userId == friend.userId && item.isOn=="1"){ //show only online friends for index
-									$("#friendsList").append("<li><a href=MainProfile.jsp?fname="+item.fname+"&lname="+item.lname+ ">"+name+"</a></li>");
 
-								}
-
-							}
-							});
-						},
-					});
-					});
-					
-				}
-            });
-        },
-        error: function(e) {
-			alert("error in friends!!!!!");
-        }
-    });*/
 }
+   function getOnlineFriendsForUsers(userid) {
+    	//get online friends
+    	$("#pFriendList").empty();
+        $.ajax({
+            url: "getFriendsHandler.jsp",     
+    		dataType: "json",
+    		data: 'userName='+userid, 
+            success: function(data) {  
+            	
+    				$.each(data, function(j, item) {
+    				// console.log(item.fname + " " + item.lname);
+    				if (item.isOnline) {
+    					var str = item.FullName;
+    					var res = str.split(" ");
 
+    					//fill online friends on profile
+    					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
-function getOnlineFriendsForUsers(userid) {
-	//get online friends
-	$("#pFriendList").empty();
-    $.ajax({
-        url: "getFriendsHandler.jsp",     
-		dataType: "json",
-		data: 'userName='+userid, 
-        success: function(data) {  
-        	
-				$.each(data, function(j, item) {
-				// console.log(item.fname + " " + item.lname);
-				if (item.isOnline) {
-					var str = item.FullName;
-					var res = str.split(" ");
+    				}
 
-					//fill online friends on profile
-					$("#pFriendList").append("<li><a  href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+    			});
+    			 
+            },
+            error: function(e) {
+    			alert("error in getOnlineFriends!!!!!");
+            }
+        });
+    }
 
-				}
-
-			});
-			 
-        },
-        error: function(e) {
-			alert("error in getOnlineFriends!!!!!");
-        }
-    });
-}
 
 
 //adding friend with ajax to DB,and get result of action
@@ -190,6 +150,34 @@ function addFriend(friendName){
 	
 	
 }
+
+function addComment(){
+	var content = $(this).parent().value;
+	alert(content);
+	$.ajax({
+		url:'insertCommentHandler.jsp',
+		async: false,
+		type: 'POST',
+		datatype: 'json',
+		data: 'post=' + postId + '&content=' + content + '&userName='+currentUserId ,
+		success: function(data){
+			
+			 	if(data.result){
+			 	
+			 		//getOnlineFriends();
+			 	}
+			 	else{
+			 		alert('Opps..!!');
+			 	}
+		},
+		error: function(e) {
+			alert("error in ajax adding friend");
+		}
+	});
+	
+	
+}
+
 //function to get all Users when we use the search input
 function getAllUsers(userName){
 	
@@ -359,7 +347,7 @@ function searchFriends () {
 }
 
 function getPostDeatails(user){
-	
+	$('#postList').empty();
 	//getFriendsPostsHandler.jsp
 	
 	var htmlString = "";
@@ -379,7 +367,8 @@ function getPostDeatails(user){
 				"<span class='userName'>" + value.FullName + "</span><span>says:</span>"
 				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
 				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
-				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a href='javascript:void(0);'>comment</a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div><div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
+				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" +
+						"<div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
 				
 			
 									
@@ -426,42 +415,30 @@ function getPostDeatails(user){
 function getComments(postId){
 var htmlString = "";
         $.ajax({
-			url: "Js/comments.js",     
-			dataType: "json"	,	
+			url: "getCommentHandler.jsp",     
+			dataType: "json",
+			data: 'post=' + postId,
 			success: function(data) {
 			 var divID = '#comments_div_'+postId;			
-			 $.each(data.comments, function(i, value) {
-				if(value.postId != postId)
-					return;
-				 
-				getUsers(postId,value.postComments, function(result) {
-					var users = result.users;
 					
-					for (i = 0; i < value.postComments.length; i++) { 
-						for (j = 0; j < users.length; j++) { 
+					for (var i = 0; i < data.length; i++) { 
 						
-							if(value.postComments[i].userId == users[j].userId){
-							//var divID = '#comments_div_'+value.postId;	
-							console.log((users[j].fname + " " + users[j].lname));
-							htmlString =  "<div class='comment_class'><div class='comment_title><a href='#'><img class='images_size' src="+
-							users[j].pic +" class='pic_post' border='1px'></a><span class='userName'>" 
-							+ (users[j].fname + " " + users[j].lname) + "</span><span>: " +value.postComments[i].content +"</span></div></div>"; 
-							//$('#post_'+postId).append(htmlString);
-							$(divID).append(htmlString);
-							
-							}
-						}
-					}
+						//var divID = '#comments_div_'+value.postId;	
+						//console.log((users[j].fname + " " + users[j].lname));
+						htmlString =  "<div class='comment_class'><div class='comment_title'><a href='#'><img class='images_size' src="+
+						data[i].pic +" class='pic_post' border='1px'></a><span class='userName'>" 
+						+ (data[i].FirstName + " " + data[i].LastName) + "</span><span>: " +data[i].content +"</span></div></div>"; 
+						//$('#post_'+postId).append(htmlString);
+						$(divID).append(htmlString);
+
 					
-				});
-				 
-				});
-			
-		  
+					}
+					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn'>comment</a></div>");
+
 			  
 			},
 			error: function(e) {
-				alert("error in getComments!!!!!");
+				alert("error in getComments!");
 			}
 		});
 }
@@ -473,12 +450,10 @@ getComments(value);
 
 function getFullName(userId)
 {
-	
 	$('#fullName').empty();
 			$.ajax({
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
-			
 			data: 'userName='+userId,
 			success: function(data) {  
 				$('#fullName').append(data.FirstName+" "+data.LastName);
@@ -500,8 +475,6 @@ function getUsers(id,data,callback) {
 }
 
 function getPictures(userId){
-	
-	
 	var htmlString = "";
 	 $('.profilePics').empty();
 
@@ -509,7 +482,6 @@ function getPictures(userId){
 			url: "ProfileHandler.jsp",     
 			dataType: "json",
 			data: 'userName='+userId,
-			
 			success: function(data) {  
 					htmlString =  "<img class=cover src="+data.cover+">"+
 					 "<img class=profile src="+data.profile+">";
@@ -525,41 +497,18 @@ function getPictures(userId){
 function getMsgData(){
 	
 	$.ajax({
-			url: "Js/messages.js",     
-			dataType: "json"	,	
+			url: "MessageHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.messages, function(i, data) {
-						if(currentUser != data.userId){
-						return;	
-						}
-						$.each(data.userMesseges, function(k, message) {
-							$.ajax({
-									url: "Js/users.js",     
-									dataType: "json"	,	
-									success: function(data) {  
-									 $.each(data.users, function(j,user) {		
-										if(user.userId == currentUser){
-											return;
-										}else{ 
-											
-											if(user.userId == message.fromUser) 
-											{
-												
-												$("#msgDropDown table").append('<tr><td class="td_text"><span><b>' + user.fname + " " + user.lname + ': </b></span></td><td class="td_text">' + message.content + '</td></tr>');
-												
-											}
-										}
-										});
-									},
-									error: function(e) {
-										alert("error in msg data in!!!!!" + e);
-									}
-							});
-						});
+					$.each(data, function(i, msg) {
+						$("#msgDropDown table").append('<tr><td class="td_text"><span><b>' + msg.FirstName + " " + msg.LastName + ': </b></span></td><td class="td_text">' 
+								+ msg.content + '</td></tr>');
+						
 					});
 			},
 			error: function(e) {
-				alert("error in msg data !!!!!" + e);
+				alert("error in msg data!" + e);
 			}
 		});
 		
@@ -567,23 +516,18 @@ function getMsgData(){
 
 function getNotifData(){
 	$.ajax({
-			url: "Js/notifications.js",     
-			dataType: "json"	,	
+			url: "NotifHandler.jsp",     
+			dataType: "json",
+			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.notifications, function(i, item) {
-						if(currentUser != item.userId){
-						return;	
-						}
-						$.each(item.userNotifications, function(k, notif) {
-							$("#NotifDropDown table").append('<tr class="border_bottom"><td class="td_text"><span>' + notif.content + '</span></td></tr>');
-							
-							
+					$.each(data, function(i, notif) {
+						$("#NotifDropDown table").append('<tr class="border_bottom"><td class="td_text"><span>' + notif.content + '</span></td></tr>');
 							//$("#NotifDropDown ul").append("<li>"+ notif.content +"</li>");
 						});
-					});
+
 			},
 			error: function(e) {
-				alert("error in getNotifData!!!!!" + e);
+				alert("error in getNotifData!" + e);
 			}
 		});
 		
@@ -816,20 +760,21 @@ function customAutoComplete(){
 }
 
 $(document).ready(function(){
-
 	$( document ).on( "mousemove", function( event ) {
 	pageX= event.pageX ; pageY= event.pageY;
 	});
 	
 	//getData();
 	getPostDeatails();
+	$("#btnPost").click(getPostDeatails());
 	
 	getOnlineFriends();
 	
 	setInterval(getOnlineFriends,8000);
 	
-	//getFullName(currentUserId); //for profile page
-	//getPictures(currentUserId);
+	getFullName(currentUserId); //for profile page
+	getPictures(currentUserId);
+	
 	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');
