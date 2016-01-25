@@ -19,7 +19,7 @@
 			JSONArray notifList = new JSONArray();
 			
 			PreparedStatement ps;
-			ps = con.getConnection().prepareStatement(q.getMessages);
+			ps = con.getConnection().prepareStatement(q.getNotif);
 			ResultSet rs;
 			
 			ps.setString(1, userName); 

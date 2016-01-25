@@ -151,7 +151,9 @@ function addFriend(friendName){
 	
 }
 
-function addComment(postId, content){
+function addComment(){
+	var content = $(this).parent().value;
+	alert(content);
 	$.ajax({
 		url:'insertCommentHandler.jsp',
 		async: false,
@@ -431,7 +433,7 @@ var htmlString = "";
 
 					
 					}
-					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' value="+postId+"><a href='javascript:void(0);'>comment</a></div>");
+					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn'>comment</a></div>");
 
 			  
 			},
@@ -499,7 +501,7 @@ function getMsgData(){
 			dataType: "json",
 			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.msgList, function(i, msg) {
+					$.each(data, function(i, msg) {
 						$("#msgDropDown table").append('<tr><td class="td_text"><span><b>' + msg.FirstName + " " + msg.LastName + ': </b></span></td><td class="td_text">' 
 								+ msg.content + '</td></tr>');
 						
@@ -518,7 +520,7 @@ function getNotifData(){
 			dataType: "json",
 			data: 'userName='+currentUserId,
 			success: function(data) {  
-					$.each(data.notifList, function(i, notif) {
+					$.each(data, function(i, notif) {
 						$("#NotifDropDown table").append('<tr class="border_bottom"><td class="td_text"><span>' + notif.content + '</span></td></tr>');
 							//$("#NotifDropDown ul").append("<li>"+ notif.content +"</li>");
 						});

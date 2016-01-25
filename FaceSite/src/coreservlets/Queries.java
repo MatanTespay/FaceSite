@@ -29,7 +29,8 @@ public class Queries {
 			+ "where toUser=?;";
 	
 	public String getNotif = "SELECT firstName, lastName, content\n"
-			+ "FROM tblnotification inner join tbluser on username=userOwner;";
+			+ "FROM tblnotification inner join tbluser on username=userOwner\n"
+			+ "where userOwner=?";
 	
 	public String getComments = "SELECT firstName,lastName,content, profilePic "
 			+ " FROM facebookdb.tblcomment inner join tbluser on author=username"
