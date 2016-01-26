@@ -57,6 +57,28 @@ function getData() {
 }
 
 
+function getDataForAllUsers() {
+	$("#pUserList").empty();
+
+    $.ajax({
+        url: "getAllUsersHandler.jsp",     
+		dataType: "json",
+		data: 'userName='+currentUserId, 
+        success: function(data) {  
+        	
+				$.each(data, function(j, item) {
+					var str = item.FirstName +" "+ item.LastName;
+					$("#pUserList").append("<li><a href=MainProfile.jsp?user="+item.user+">"+str+"</a></li>");
+			});
+			 
+        },
+        error: function(e) {
+			alert("error in getting users!");
+        }
+    });
+
+}
+
 function getOnlineFriends() {
 	//get online friends
 	
@@ -87,7 +109,7 @@ function getOnlineFriends() {
 			 
         },
         error: function(e) {
-			alert("error in getOnlineFriends!!!!!");
+			alert("error in getOnlineFriends!");
         }
     });
 
@@ -442,7 +464,7 @@ function getFullName(userId)
 			dataType: "json",
 			data: 'userName='+userId,
 			success: function(data) {  
-				$('#fullName').append(data.FirstName+" "+data.LastName);
+				$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img  src='Pics/addUserBig.png'></span>");
 
 			},
 			error: function(e) {
