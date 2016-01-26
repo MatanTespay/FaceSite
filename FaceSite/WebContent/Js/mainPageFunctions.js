@@ -382,6 +382,10 @@ function searchFriends () {
 			});
 }
 
+function checkForNewComments(array){
+	console.log('post id -> '+ array[0] + '  #comments ' + array[1]);
+	
+}
 function getPostDeatails(user){
 	$('#postList').empty();
 	//getFriendsPostsHandler.jsp
@@ -406,7 +410,7 @@ function getPostDeatails(user){
 				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" +
 						"<div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
 				
-			
+				
 									
 				$('#postList').append(htmlString);
 			});
@@ -421,11 +425,13 @@ function getPostDeatails(user){
 
 
 function getComments(postId){
+	var result = false;
 var htmlString = "";
         $.ajax({
 			url: "getCommentHandler.jsp",     
 			dataType: "json",
 			data: 'post=' + postId,
+			async: false,
 			success: function(data) {
 			 var divID = '#comments_div_'+postId;			
 					
@@ -441,14 +447,22 @@ var htmlString = "";
 
 					
 					}
+					
 					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn'>comment</a></div>");
-
-			  
+					
+					//set inteval to refresh the commects
+					if(data && data.length > 0){
+						result = true;
+						
+					}
+					
 			},
 			error: function(e) {
 				alert("error in getComments!");
 			}
 		});
+        
+        return result;
 }
 
 function showComments(value){
@@ -622,17 +636,24 @@ function setCommentsDiv(btn, list,postId){
 		hideComments(btn,list);
 		
 		
+		  
+		interval.clear(postId);
 		//unbind the event listener which closes the diaolg when nedded to the document.
 		//event is not nedded since the dioalg is closed.
 		//unbindClickOutsideComments();
 	  }
 	  else {
 		//get data to show in dialog.
-		$(list).empty();		
-		getComments(postId);
+		$(list).empty();	
+		
+		//get a boolean result indicating if post has comments
+		var hasComments = getComments(postId);
 		//show the dialog
 		expandComments(btn,list);
 
+		//if post has commennts set interval to check foe new comments
+		  if(hasComments)
+		  interval.make(checkForNewComments, 1000, [postId]);
 	  }
 	
 	
