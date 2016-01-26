@@ -143,7 +143,6 @@ if (session.getAttribute("userid") == null) {
 						getFullName(theuser); 
 						getPictures(theuser);
 						getOnlineFriendsForUsers(theuser);
-						$("#imgAddFriend").on('click',addFriend(theuser));
 					</script>
 		
 				<%
