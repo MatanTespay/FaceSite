@@ -92,7 +92,8 @@ function getOnlineFriends() {
     });
 
 }
-   function getOnlineFriendsForUsers(userid) {
+
+function getOnlineFriendsForUsers(userid) {
     	//get online friends
     	$("#pFriendList").empty();
         $.ajax({
@@ -228,9 +229,11 @@ function getAllUsers(userName){
 				    	  addFriend(ui.item.value);
 				    	  $('#autocomplete').val(""); 
 				      }
-				      else
-				      window.open("MainProfile.jsp?fname="+res[0]+"&lname="+res[1] , "_self");
-				     
+				      else{
+				    	  
+				    	  	window.open("MainProfile.jsp?fname="+res[0]+"&lname="+res[1] , "_self");
+				      
+				      }
 				      //disable default action of select function (set input field to the value and not the label)
 				      return false;
 				},
@@ -381,34 +384,6 @@ function getPostDeatails(user){
 	});
     
    
-	/*
-	var htmlString = "";
-    $.ajax({
-		url: "Js/posts.js",     
-		dataType: "json"	,	
-		success: function(data) {  
-		 $.each(data.posts, function(i, value) {
-			if(value.userId != user.userId)
-				return;
-			var btnID = "#toggle_comment_"+value.postId;
-			var divID = "#comments_div_"+value.postId;
-			htmlString =  "<div id='post_" + value.postId+ "' class='post_class'><div class='post_title><a href='#'><img src="+
-				user.pic +" class='pic_post' border='1px'></a>" + 
-				"<span class='userName'>" + user.fname + " " + user.lname + "</span><span>says:</span>"
-				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
-				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
-				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a href='javascript:void(0);'>comment</a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div><div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
-				
-			
-									
-				$('#postList').append(htmlString);
-			});
-		},
-		error: function(e) {
-			alert("error in users!!!!!");
-		}
-	});
-	*/
 }
 
 
@@ -772,8 +747,8 @@ $(document).ready(function(){
 	
 	setInterval(getOnlineFriends,8000);
 	
-	getFullName(currentUserId); //for profile page
-	getPictures(currentUserId);
+	//getFullName(currentUserId); //for profile page
+	//getPictures(currentUserId);
 	
 	
 	setDialog('#msg', '#msgDropDown');
