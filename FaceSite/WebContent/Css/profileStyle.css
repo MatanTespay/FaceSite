@@ -30,6 +30,11 @@
 }
 #pFriendList{
 	list-style-type:none;
-
-	
 }
+
+#imgAddFriend{
+	margin-top: 5px;
+	margin-left: 10px;
+//	display: none;
+}
+	

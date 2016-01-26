@@ -38,4 +38,7 @@ public class Queries {
 	
 	public String insertComment = "INSERT INTO `facebookdb`.`tblcomment`\n"
 			+ "(`postId`,`content`,`author`) VALUES (?,?,?);";
+	
+	public String getUsers = "SELECT * FROM facebookdb.tbluser\n"
+			+ "Where username!=?;";
 }

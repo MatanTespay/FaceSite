@@ -102,6 +102,11 @@
 					<ul id="friendsList">
 					</ul>
 				</div>
+				
+				<div>
+					<a href="AllUsers.jsp" style="padding-left: 23px;">All Users</a>
+				</div>
+				
 			</div>
 			<div id="section">
 				<form action="PostHandler.jsp" method="post">

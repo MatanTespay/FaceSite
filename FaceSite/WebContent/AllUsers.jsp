@@ -4,8 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title>Main window</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="Js/mainPageFunctions.js" type="text/javascript"></script>
 
@@ -115,41 +114,17 @@ if (session.getAttribute("userid") == null) {
 			</div>
 			<div id="section">
 				<!--Profile Content -->
-				<div class="profilePics"></div>
 
-				<div id="fullName"></div>
-
-				<div id="pFriendListDiv">
+				<div id="pUsersListDiv">
 					<br>
 					<h2>
-						<span id="titleFirends">List of Friends</span>
+						<span id="titleUsers">List of Users</span>
 					</h2>
-					<ul id="pFriendList">
+					<ul id="pUserList">
 					</ul>
 				</div>
-
 			</div>
-				
-				<%
-					if (request.getParameter("user") != null) {
-						String user = request.getParameter("user");
-						
-						
-				%>
 
-					
-					<script type="text/javascript">
-						var theuser = "<%= user %>";
-						getFullName(theuser); 
-						getPictures(theuser);
-						getOnlineFriendsForUsers(theuser);
-						$("#imgAddFriend").on('click',addFriend(theuser));
-					</script>
-		
-				<%
-					}
-
-				%>
 
 
 		</div>
@@ -160,7 +135,7 @@ if (session.getAttribute("userid") == null) {
 
 	</div>
 	<!-- #wrapper -->
-
+<script>getDataForAllUsers();</script>
 </body>
 
 </html>
