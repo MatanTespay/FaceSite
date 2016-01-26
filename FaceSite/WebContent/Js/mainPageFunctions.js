@@ -464,7 +464,7 @@ function getFullName(userId)
 			dataType: "json",
 			data: 'userName='+userId,
 			success: function(data) {  
-				$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img  src='Pics/addUserBig.png'></span>");
+				$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img src='Pics/addUserBig.png'></span>");
 
 			},
 			error: function(e) {
