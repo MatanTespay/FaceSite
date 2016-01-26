@@ -25,6 +25,7 @@
 				user.put("LastName",rs.getString("lastName"));
 				user.put("profile",rs.getString("profilePic"));
 				user.put("cover",rs.getString("coverPic"));
+				user.put("username",rs.getString("username"));
 				
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
