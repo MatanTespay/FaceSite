@@ -112,7 +112,9 @@ if (session.getAttribute("userid") == null) {
 				<!--Profile Content -->
 				<div class="profilePics"></div>
 
-				<div id="fullName"></div>
+				<div id="fullName">
+				
+				</div>
 
 				<div id="pFriendListDiv">
 					<br>
@@ -136,6 +138,7 @@ if (session.getAttribute("userid") == null) {
 						getFullName(theuser); 
 						getPictures(theuser);
 						getOnlineFriendsForUsers(theuser);
+						
 					</script>
 		
 				<%

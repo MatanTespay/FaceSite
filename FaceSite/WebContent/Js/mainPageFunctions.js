@@ -61,7 +61,7 @@ function getOnlineFriends() {
 	//get online friends
 	
 	$("#friendsList").empty();
-	$("#pFriendList").empty();
+	//$("#pFriendList").empty();
     $.ajax({
         url: "getFriendsHandler.jsp",     
 		dataType: "json",
@@ -79,7 +79,7 @@ function getOnlineFriends() {
 									 + ">" + str
 									+ "</a></li>");
 					//fill online friends on profile
-					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+					//$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
 				}
 
@@ -102,18 +102,29 @@ function getOnlineFriendsForUsers(userid) {
     		data: 'userName='+userid, 
             success: function(data) {  
             	
-    				$.each(data, function(j, item) {
-    				// console.log(item.fname + " " + item.lname);
-    				if (item.isOnline) {
-    					var str = item.FullName;
-    					var res = str.split(" ");
+            		//alert(data.length);
+            		
+            		if(data.length == 0){
+            		
+            			$("#pFriendList").append("<li>You dont have friends yet,  <a href=allusers.jsp>Add friends</a></li>");
+            		}
+            		else{
+            			
+            			$.each(data, function(j, item) {
+            				// console.log(item.fname + " " + item.lname);
+            				if (item.isOnline) {
+            					var str = item.FullName;
+            					
 
-    					//fill online friends on profile
-    					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+            					//fill online friends on profile
+            					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
 
-    				}
+            				}
 
-    			});
+            			});
+            		}
+            		
+    				
     			 
             },
             error: function(e) {
@@ -223,17 +234,17 @@ function getAllUsers(userName){
 				      $('#autocomplete').val(ui.item.label); 
 				      
 				      //open page profile of friend
-				      var str = ui.item.label;
-				      var res = str.split(" ");
-				      if ( ui.item.Category != 'Friends'){
+				      window.open("MainProfile.jsp?user="+ui.item.value, "_self");
+				      
+				      /*if ( ui.item.Category != 'Friends'){
 				    	  addFriend(ui.item.value);
 				    	  $('#autocomplete').val(""); 
 				      }
 				      else{
 				    	  
-				    	  	window.open("MainProfile.jsp?fname="+res[0]+"&lname="+res[1] , "_self");
+				    	  	window.open("MainProfile.jsp?user="+ui.item.value, "_self");
 				      
-				      }
+				      }*/
 				      //disable default action of select function (set input field to the value and not the label)
 				      return false;
 				},
