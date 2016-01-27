@@ -128,7 +128,7 @@ function getOnlineFriendsForUsers(userid) {
             		
             		if(data.length == 0){
             		
-            			$("#pFriendList").append("<li>You dont have friends yet,  <a href=allusers.jsp>Add friends</a></li>");
+            			$("#pFriendList").append("<li>You dont have friends yet,  <a href=AllUsers.jsp>Add friends</a></li>");
             		}
             		else{
             			
@@ -158,29 +158,37 @@ function getOnlineFriendsForUsers(userid) {
 
 
 //adding friend with ajax to DB,and get result of action
-function addFriend(friendName){
+function addFriend(element){
+	var friendName =$(element).data("data-user");
 	
-	$.ajax({
-		url:'insertFriendHandler.jsp',
-		async: false,
-		type: 'POST',
-		datatype: 'json',
-		// currentUserId is value from the page, need to set in every page
-		data: 'user=' + currentUserId + '&friend=' + friendName ,
-		success: function(data){
-			
-			 	if(data && data.result){
-			 	
-			 		getOnlineFriends();
-			 	}
-			 	else{
-			 		alert('Opps..!!');
-			 	}
-		},
-		error: function(e) {
-			alert("error in ajax adding friend");
-		}
-	});
+	if(friendName){
+	
+		$.ajax({
+			url:'insertFriendHandler.jsp',
+			async: false,
+			type: 'POST',
+			datatype: 'json',
+			// currentUserId is value from the page, need to set in every page
+			data: 'user=' + currentUserId + '&friend=' + friendName ,
+			success: function(data){
+				
+				 	if(data && data.result){
+				 	
+				 		getOnlineFriends();
+				 		getOnlineFriendsForUsers(friendName);
+				 		
+				 	}
+				 	else{
+				 		alert('Opps..!!');
+				 	}
+			},
+			error: function(e) {
+				alert("error in ajax adding friend");
+			}
+		});
+		
+	}
+	
 	
 	
 }
@@ -493,8 +501,10 @@ function getFullName(userId)
 			dataType: "json",
 			data: 'userName='+userId,
 			success: function(data) {  
-
-				$('#fullName').append(data.FirstName+" "+data.LastName);
+				var span = $('<span />').attr("id","userName").data( "data-user", data.username ).html(data.FirstName+" "+data.LastName);
+				
+				$('#fullName').append(span);
+				//$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img onclick='addFriend("+ data.username +")' src='Pics/addUserBig.png'></span>");
 
 			},
 			error: function(e) {

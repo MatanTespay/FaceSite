@@ -115,10 +115,14 @@ if (session.getAttribute("userid") == null) {
 			</div>
 			<div id="section">
 				<!--Profile Content -->
-				<div class="profilePics"></div>
+				<div class="profilePics" ></div>
 
-				<div id="fullName">
+				<div id="fullName" style="display: inline">
 				
+				</div>
+				
+				<div id="btnAddDiv" style="display: inline">
+				<img id='imgAddFriend' onclick='addFriend("#userName")' src='Pics/addUserBig.png' title='Add as a firend' alt='Add as a firend'>
 				</div>
 
 				<div id="pFriendListDiv">
@@ -146,17 +150,7 @@ if (session.getAttribute("userid") == null) {
 						getPictures(theuser);
 						getOnlineFriendsForUsers(theuser);
 						var isFriend = '<%= request.getParameter("catagory") %>';
-						//alert(isFriend);
-						if(isFriend === "Friends"){
-							//alert(isFriend);
-							console.log(isFriend);
-							$("#imgAddFriend").css("display","none");
-						}
-						else{
-							console.log(isFriend);
-							$("#imgAddFriend").css("display","inline");
-							
-						}
+						setAddBtn(isFriend);
 							
 						
 					</script>
