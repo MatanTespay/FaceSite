@@ -186,8 +186,8 @@ function addFriend(friendName){
 	
 }
 
-function addComment(){
-	var content = $(this).parent().value;
+function addComment(postId){
+	var content = $("#addCommet_"+postId).val();
 	alert(content);
 	$.ajax({
 		url:'insertCommentHandler.jsp',
@@ -198,15 +198,16 @@ function addComment(){
 		success: function(data){
 			
 			 	if(data.result){
-			 	
-			 		//getOnlineFriends();
+			 		
+			 		$("#comments_div_"+postId).empty();
+			 		getComments(postId);
 			 	}
 			 	else{
 			 		alert('Opps..!!');
 			 	}
 		},
 		error: function(e) {
-			alert("error in ajax adding friend");
+			alert("error in ajax adding comment");
 		}
 	});
 	
@@ -463,8 +464,8 @@ var htmlString = "";
 
 					
 					}
-					
-					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn' onclick='' >comment</a></div>");
+					var inputId = "addCommet_"+postId;
+					$(divID).append("<div><input type='text' id="+inputId + " size='60' style='margin-right:5px;' >" + "<a href='javascript:void(0);' class='cmtBtn' onclick='addComment("+postId +")'>comment</a></div>");
 					
 					//set inteval to refresh the commects
 					if(data && data.length > 0){

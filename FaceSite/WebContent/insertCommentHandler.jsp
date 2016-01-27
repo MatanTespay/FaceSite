@@ -24,7 +24,7 @@
 			PreparedStatement ps;
 			ps = con.getConnection().prepareStatement(q.insertComment);
 			
-			ps.setInt(1, Integer.parseInt("post")); 
+			ps.setInt(1, Integer.parseInt(postid)); 
 			ps.setString(2, content); 
 			ps.setString(3, user);
 		
