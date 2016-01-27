@@ -19,29 +19,41 @@ public class Queries {
 			+ " ,p.postId , DATE_FORMAT(p.date , '%d/%m/%y') as date, p.content, p.author FROM "
 			+ " facebookdb.tblpost as p inner join tbluser as u"
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
-			+ " where firstuser = ?) || p.author=? order by date desc"; // <<added || p.author=?
+			+ " where firstuser = ?) || p.author=? order by date desc"; // <<added
+																		// ||
+																		// p.author=?
 
 	public String getUserDetails = "SELECT *\n" + "FROM tbluser \n"
 			+ "WHERE username = ?";
-	
+
 	public String getMessages = "SELECT content,  firstName, lastName\n"
 			+ "FROM tblmessage inner join tbluser on fromUser=username\n"
 			+ "where toUser=?;";
-	
+
 	public String getNotif = "SELECT firstName, lastName, content\n"
 			+ "FROM tblnotification inner join tbluser on username=userOwner\n"
 			+ "where userOwner=?";
-	
+
 	public String getComments = "SELECT firstName,lastName,content, profilePic "
 			+ " FROM facebookdb.tblcomment inner join tbluser on author=username"
 			+ " where postId=?;";
-	
+
 	public String insertComment = "INSERT INTO `facebookdb`.`tblcomment`\n"
 			+ "(`postId`,`content`,`author`) VALUES (?,?,?);";
-	
+
+	/**
+	 * get all friends of the user and the other users
+	 */
 	public String getUsers = "(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, 'Friends' as 'Category' \n"
-	+ " from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?)\n "
-    + " Union  select CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, 'Others' as 'Category'\n "  
-    + " from  facebookdb.tbluser as u where  (u.username != ?) \n" 
-	+ " and u.username Not in (select f.secondUser from tblfriend as f where f.firstUser = ?) ;";
+			+ " from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?)\n "
+			+ " Union  select CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, 'Others' as 'Category'\n "
+			+ " from  facebookdb.tbluser as u where  (u.username != ?) \n"
+			+ " and u.username Not in (select f.secondUser from tblfriend as f where f.firstUser = ?) ;";
+	/**
+	 * get friends of the user we are viewing that are not friends of the connected user
+	 */
+	public String getSpecialFirends = "(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, isOnline "
+			+ " , CASE WHEN u.username in (select secondUser from tblfriend where secondUser = u.username and firstUser = ?)  THEN 'yes' "
+			+ " ELSE 'No' END AS 'isFriend' "
+			+ "	from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?)";
 }
