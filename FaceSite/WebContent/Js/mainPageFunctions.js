@@ -382,6 +382,21 @@ function searchFriends () {
 			});
 }
 
+function setAddBtn(isFriend){
+	
+	if(isFriend === "Friends"){
+		//alert(isFriend);
+		console.log(isFriend);
+		$("#imgAddFriend").css("display","none");
+	}
+	else{
+		console.log(isFriend);
+		$("#imgAddFriend").css("display","inline");
+		
+	}
+	
+}
+
 function checkForNewComments(array){
 	console.log('post id -> '+ array[0] + '  #comments ' + array[1]);
 	
@@ -479,7 +494,7 @@ function getFullName(userId)
 			data: 'userName='+userId,
 			success: function(data) {  
 
-				$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img onclick='addFriend("+ data.username +")' src='Pics/addUserBig.png'></span>");
+				$('#fullName').append(data.FirstName+" "+data.LastName);
 
 			},
 			error: function(e) {
