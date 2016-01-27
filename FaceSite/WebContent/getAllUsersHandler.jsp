@@ -24,15 +24,17 @@
 			ResultSet rs;
 			
 			ps.setString(1, user); 
+			ps.setString(2, user); 
+			ps.setString(3, user); 
 			
 			
 			rs = ps.executeQuery();
 						
 			while(rs.next()){
 				JSONObject u = new JSONObject();
-				u.put("FirstName",rs.getString("firstName"));
-				u.put("LastName",rs.getString("lastName"));
+				u.put("name",rs.getString("FullName"));
 				u.put("user",rs.getString("username"));
+				u.put("catagory",rs.getString("Category"));
 
 				users.add(u);
 				

@@ -145,6 +145,19 @@ if (session.getAttribute("userid") == null) {
 						getFullName(theuser); 
 						getPictures(theuser);
 						getOnlineFriendsForUsers(theuser);
+						var isFriend = '<%= request.getParameter("catagory") %>';
+						//alert(isFriend);
+						if(isFriend === "Friends"){
+							//alert(isFriend);
+							console.log(isFriend);
+							$("#imgAddFriend").css("display","none");
+						}
+						else{
+							console.log(isFriend);
+							$("#imgAddFriend").css("display","inline");
+							
+						}
+							
 						
 					</script>
 		
