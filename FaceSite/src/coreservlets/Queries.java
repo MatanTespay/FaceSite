@@ -53,7 +53,7 @@ public class Queries {
 	 * get friends of the user we are viewing that are not friends of the connected user
 	 */
 	public String getSpecialFirends = "(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, isOnline "
-			+ " , CASE WHEN u.username in (select secondUser from tblfriend where secondUser = u.username and firstUser = ?)  THEN 'yes' "
+			+ " , CASE WHEN u.username in (select secondUser from tblfriend where secondUser = u.username and firstUser = ?)  THEN 'Yes' "
 			+ " ELSE 'No' END AS 'isFriend' "
 			+ "	from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?)";
 }

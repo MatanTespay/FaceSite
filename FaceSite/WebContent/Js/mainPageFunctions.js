@@ -119,7 +119,7 @@ function getOnlineFriendsForUsers(userid) {
     	//get online friends
     	$("#pFriendList").empty();
         $.ajax({
-            url: "getFriendsHandler.jsp",     
+            url: "getFriendsForUsers.jsp",     
     		dataType: "json",
     		data: 'userName='+userid+'&connectedUser='+currentUserId, 
             success: function(data) {  
@@ -136,10 +136,11 @@ function getOnlineFriendsForUsers(userid) {
             				// console.log(item.fname + " " + item.lname);
             				if (item.isOnline) {
             					var str = item.FullName;
-            					
-
+            					if(item.isFriend=="Yes")
             					//fill online friends on profile
-            					$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
+            						$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+"&catagory=Friends"+">"+str+"</a></li>");
+            					else
+            						$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+"&catagory=Others"+">"+str+"</a></li>");
 
             				}
 

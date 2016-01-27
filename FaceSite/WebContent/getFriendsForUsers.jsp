@@ -22,7 +22,7 @@
 			JSONArray usersList = new JSONArray();
 			
 			PreparedStatement ps;
-			ps = con.getConnection().prepareStatement(q.getOnLineFriends);
+			ps = con.getConnection().prepareStatement(q.getSpecialFirends);
 			ResultSet rs;
 			
 			ps.setString(1, connectedUser); 
@@ -36,6 +36,7 @@
 				user.put("FullName",rs.getString(1));
 				user.put("username",rs.getString(2));
 				user.put("isOnline",rs.getBoolean(3));
+				user.put("isFriend",rs.getString("isFriend"));
 				
 				usersList.add(user);
 				
