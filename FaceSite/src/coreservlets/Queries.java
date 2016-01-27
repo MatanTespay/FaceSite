@@ -39,6 +39,9 @@ public class Queries {
 	public String insertComment = "INSERT INTO `facebookdb`.`tblcomment`\n"
 			+ "(`postId`,`content`,`author`) VALUES (?,?,?);";
 	
-	public String getUsers = "SELECT * FROM facebookdb.tbluser\n"
-			+ "Where username!=?;";
+	public String getUsers = "(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, 'Friends' as 'Category' "
+	+ " from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?) "
+    + " Union+  select CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, 'Others' as 'Category' "  
+    + " from  facebookdb.tbluser as u where  (u.username != ?) " 
+	+ " and u.username Not in (select f.secondUser from tblfriend as f where f.firstUser = ?) ;";
 }
