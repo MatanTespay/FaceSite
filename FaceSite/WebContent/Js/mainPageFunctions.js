@@ -382,6 +382,21 @@ function searchFriends () {
 			});
 }
 
+function setAddBtn(isFriend){
+	
+	if(isFriend === "Friends"){
+		//alert(isFriend);
+		console.log(isFriend);
+		$("#imgAddFriend").css("display","none");
+	}
+	else{
+		console.log(isFriend);
+		$("#imgAddFriend").css("display","inline");
+		
+	}
+	
+}
+
 function checkForNewComments(array){
 	console.log('post id -> '+ array[0] + '  #comments ' + array[1]);
 	
@@ -448,7 +463,7 @@ var htmlString = "";
 					
 					}
 					
-					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn'>comment</a></div>");
+					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn' onclick='' >comment</a></div>");
 					
 					//set inteval to refresh the commects
 					if(data && data.length > 0){
@@ -479,7 +494,7 @@ function getFullName(userId)
 			data: 'userName='+userId,
 			success: function(data) {  
 
-				$('#fullName').append(data.FirstName+" "+data.LastName+ "<span id='imgAddFriend'><img onclick='addFriend("+ data.username +")' src='Pics/addUserBig.png'></span>");
+				$('#fullName').append(data.FirstName+" "+data.LastName);
 
 			},
 			error: function(e) {
