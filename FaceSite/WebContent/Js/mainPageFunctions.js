@@ -67,8 +67,8 @@ function getDataForAllUsers() {
         success: function(data) {  
         	
 				$.each(data, function(j, item) {
-					var str = item.FirstName +" "+ item.LastName;
-					$("#pUserList").append("<li><a href=MainProfile.jsp?user="+item.user+">"+str+"</a></li>");
+					var str = item.name;
+					$("#pUserList").append("<li><a href=MainProfile.jsp?user="+item.user+"&catagory="+item.catagory+">"+str+"</a></li>");
 			});
 			 
         },
