@@ -448,7 +448,7 @@ var htmlString = "";
 					
 					}
 					
-					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn'>comment</a></div>");
+					$(divID).append("<div><input type='text' id='addCommet_"+postId+"'"+" size='60' style='margin-right:5px;' ><a href='javascript:void(0);' class='cmtBtn' onclick='' >comment</a></div>");
 					
 					//set inteval to refresh the commects
 					if(data && data.length > 0){
