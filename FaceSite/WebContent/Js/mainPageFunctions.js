@@ -98,7 +98,7 @@ function getOnlineFriends() {
 
 					$("#friendsList").append(
 							"<li><a href=MainProfile.jsp?user=" + item.username
-									 + ">" + str
+									 + "&catagory=Friends>" + str
 									+ "</a></li>");
 					//fill online friends on profile
 					//$("#pFriendList").append("<li><a href=MainProfile.jsp?user="+item.username+">"+str+"</a></li>");
@@ -121,7 +121,7 @@ function getOnlineFriendsForUsers(userid) {
         $.ajax({
             url: "getFriendsHandler.jsp",     
     		dataType: "json",
-    		data: 'userName='+userid, 
+    		data: 'userName='+userid+'&getAll=1', 
             success: function(data) {  
             	
             		//alert(data.length);
