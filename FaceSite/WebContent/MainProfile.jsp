@@ -58,7 +58,7 @@ if (session.getAttribute("userid") == null) {
 			<div class="Home_Class">
 				<a href="mainPage.jsp"> <img src="Pics/home.png"
 					id="profileLogo">
-				</a> <a href='MainProfile.jsp?user=<%= session.getAttribute("userid") %>'  > <img src="Pics/profileLogo.png" 
+				</a> <a href='MainProfile.jsp?user=<%= session.getAttribute("userid") %>&catagory=Others'  > <img src="Pics/profileLogo.png"
 					id="profileLogo">
 				</a>
 			</div>
