@@ -128,7 +128,10 @@ function getOnlineFriendsForUsers(userid) {
             		
             		if(data.length == 0){
             		
-            			$("#pFriendList").append("<li>You dont have friends yet,  <a href=AllUsers.jsp>Add friends</a></li>");
+            			if(userid == currentUserId)
+            			$("#pFriendList").append("<li>You dont have friends yet...</li>");
+            			else
+            			$("#pFriendList").append("<li>this user dont have friends yet...</li>");
             		}
             		else{
             			
@@ -196,7 +199,7 @@ function addFriend(element){
 
 function addComment(postId){
 	var content = $("#addCommet_"+postId).val();
-	alert(content);
+	
 	$.ajax({
 		url:'insertCommentHandler.jsp',
 		async: false,
@@ -207,7 +210,9 @@ function addComment(postId){
 			
 			 	if(data.result){
 			 		
-			 		$("#comments_div_"+postId).empty();
+			 		$("#existingComments_"+postId).empty();
+			 		$("#addCommet_"+postId).val('');
+			 		
 			 		getComments(postId);
 			 	}
 			 	else{
@@ -392,23 +397,38 @@ function searchFriends () {
 			});
 }
 
-function setAddBtn(isFriend){
+function setAddBtn(isFriend,theuser){
 	
 	if(isFriend === "Friends"){
-		//alert(isFriend);
-		console.log(isFriend);
+	
 		$("#imgAddFriend").css("display","none");
 	}
 	else{
-		console.log(isFriend);
-		$("#imgAddFriend").css("display","inline");
+		
+		if(theuser == currentUserId){
+			
+			$("#imgAddFriend").css("display","none");
+			
+		}
+		else{
+			
+			$("#imgAddFriend").css("display","inline");
+			
+		}
 		
 	}
 	
 }
 
 function checkForNewComments(array){
-	console.log('post id -> '+ array[0] + '  #comments ' + array[1]);
+	var postId = array[0];
+	if(postId){
+		$("#existingComments_"+postId).empty();
+		console.log('post id -> ' + postId );
+		getComments(postId);	
+		
+	}
+
 	
 }
 function getPostDeatails(user){
@@ -427,15 +447,22 @@ function getPostDeatails(user){
 			
 			var btnID = "#toggle_comment_"+value.postId;
 			var divID = "#comments_div_"+value.postId;
+			var inputId = "addCommet_"+value.postId;
+			var existingCommecntDiv = "#existingComments_"+value.postId;
+			
 			htmlString =  "<div id='post_" + value.postId+ "' class='post_class'><div class='post_title><a href='#'><img src="+
 				value.profilePic +" class='pic_post' border='1px'></a>" + 
 				"<span class='userName'>" + value.FullName + "</span><span>says:</span>"
 				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
 				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
-				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ divID +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" +
-						"<div class='' id='comments_div_"+value.postId+"' style=' display:none'></div></div>";
+				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ existingCommecntDiv +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" 
+				+ "<div class='' id='comments_div_"+value.postId+"' >" +
+						"<div id='existingComments_" + value.postId +"' style=' display:none'></div>" +
+						"<div id='newCommentDiv_"+value.postId+"' style=' display:none'><input type='text' id="+inputId + " size='60' style='margin-right:5px;' >" + "<a href='javascript:void(0);' class='cmtBtn' onclick='addComment("+value.postId +")'>comment</a></div>" +
+						"</div>";
 				
-				
+			
+			//$(divID).append("<div id='newCommentDiv'><input type='text' id="+inputId + " size='60' style='margin-right:5px;' >" + "<a href='javascript:void(0);' class='cmtBtn' onclick='addComment("+postId +")'>comment</a></div>");
 									
 				$('#postList').append(htmlString);
 			});
@@ -458,7 +485,7 @@ var htmlString = "";
 			data: 'post=' + postId,
 			async: false,
 			success: function(data) {
-			 var divID = '#comments_div_'+postId;			
+			 var divID = '#existingComments_'+postId;			
 					
 					for (var i = 0; i < data.length; i++) { 
 						
@@ -472,9 +499,9 @@ var htmlString = "";
 
 					
 					}
-					var inputId = "addCommet_"+postId;
-					$(divID).append("<div><input type='text' id="+inputId + " size='60' style='margin-right:5px;' >" + "<a href='javascript:void(0);' class='cmtBtn' onclick='addComment("+postId +")'>comment</a></div>");
-					
+					/*var inputId = "addCommet_"+postId;
+					$(divID).append("<div id='newCommentDiv'><input type='text' id="+inputId + " size='60' style='margin-right:5px;' >" + "<a href='javascript:void(0);' class='cmtBtn' onclick='addComment("+postId +")'>comment</a></div>");
+					*/
 					//set inteval to refresh the commects
 					if(data && data.length > 0){
 						result = true;
@@ -644,11 +671,13 @@ function setDialog(btn, list){
 
 function expandComments(btn,list) {
   $(list).fadeIn("slow");
+  $(list).next().show(); //show the next element - the new comment div
   $(btn).addClass("active");
   $(btn).text('hide comments');
 }
 function hideComments(btn,list) {
   $(list).fadeOut("slow");
+  $(list).next().hide(); //hide the next element - the new comment div
   $(btn).removeClass("active");
   $(btn).text('show comments');
 }
@@ -679,8 +708,8 @@ function setCommentsDiv(btn, list,postId){
 		expandComments(btn,list);
 
 		//if post has commennts set interval to check foe new comments
-		  if(hasComments)
-		  interval.make(checkForNewComments, 1000, [postId]);
+		  
+		 interval.make(checkForNewComments, 10000, [postId]);
 	  }
 	
 	

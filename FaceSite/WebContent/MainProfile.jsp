@@ -150,7 +150,7 @@ if (session.getAttribute("userid") == null) {
 						getPictures(theuser);
 						getOnlineFriendsForUsers(theuser);
 						var isFriend = '<%= request.getParameter("catagory") %>';
-						setAddBtn(isFriend);
+						setAddBtn(isFriend, theuser);
 							
 						
 					</script>
