@@ -121,7 +121,7 @@ function getOnlineFriendsForUsers(userid) {
         $.ajax({
             url: "getFriendsHandler.jsp",     
     		dataType: "json",
-    		data: 'userName='+userid+'&getAll=1', 
+    		data: 'userName='+userid+'&connectedUser='+currentUserId, 
             success: function(data) {  
             	
             		//alert(data.length);
