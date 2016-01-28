@@ -21,7 +21,12 @@ public class Queries {
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
 			+ " where firstuser = ?) || p.author=? order by date desc"; // <<added
 																		// ||
-																		// p.author=?
+	public String getNewFriendsPosts = "SELECT CONCAT(u.firstName, ' ', u.lastName) as 'FullName' ,u.profilePic "
+			+ " ,p.postId , DATE_FORMAT(p.date , '%d/%m/%y') as date, p.content, p.author FROM "
+			+ " facebookdb.tblpost as p inner join tbluser as u "
+			+ " on p.author = u.username "
+			+ " where (p.author in (SELECT seconduser FROM facebookdb.tblfriend where firstuser = ?) || p.author= ? ) "
+			+ " and FIND_IN_SET(CONVERT(p.postId,CHAR),?) = 0  order by date desc;"; // p.author=?
 
 	public String getUserDetails = "SELECT *\n" + "FROM tbluser \n"
 			+ "WHERE username = ?";
@@ -50,10 +55,13 @@ public class Queries {
 			+ " from  facebookdb.tbluser as u where  (u.username != ?) \n"
 			+ " and u.username Not in (select f.secondUser from tblfriend as f where f.firstUser = ?) ;";
 	/**
-	 * get friends of the user we are viewing that are not friends of the connected user
+	 * get friends of the user we are viewing that are not friends of the
+	 * connected user
 	 */
 	public String getSpecialFirends = "(SELECT  CONCAT(u.firstName, ' ', u.lastName) as 'FullName',u.username, isOnline "
 			+ " , CASE WHEN u.username in (select secondUser from tblfriend where secondUser = u.username and firstUser = ?)  THEN 'Yes' "
 			+ " ELSE 'No' END AS 'isFriend' "
 			+ "	from facebookdb.tbluser as u INNER JOIN tblfriend AS f ON u.username = f.secondUser where  f.firstUser = ?)";
+	
+	
 }
