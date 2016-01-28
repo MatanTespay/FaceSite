@@ -19,17 +19,31 @@
 			//
 			
 			String userName = request.getParameter("userName");
-			
+			String existingpost = request.getParameter("postIds");
 			//System.out.print(userName + "\n");
 			
 			JSONArray data = new JSONArray();
 			
 			PreparedStatement ps;
-			ps = con.getConnection().prepareStatement(q.getFriendsPosts);
+			
+			//get all friends posts
+			if(existingpost == null){
+				ps = con.getConnection().prepareStatement(q.getFriendsPosts);
+				ps.setString(1, userName); // ignore the user from th list in users
+				ps.setString(2, userName); // <<added this
+				
+			}else{
+				//get only new post of friends
+				ps = con.getConnection().prepareStatement(q.getNewFriendsPosts);
+				ps.setString(1, userName); // ignore the user from th list in users
+				ps.setString(2, userName); // <<added this
+				ps.setString(3, existingpost); // the ids of the existing posts in DB
+			}
+			
+			
 			ResultSet rs;
 			
-			ps.setString(1, userName); // ignore the user from th list in users
-			ps.setString(2, userName); // <<added this
+			
 			
 			rs = ps.executeQuery();
 			 
