@@ -12,6 +12,8 @@
 	{
 		try{
 
+			ResultSet rs ;
+			
 			String userid = (String)session.getAttribute("userid");
 			PreparedStatement ps;
 			ps = con.getConnection().prepareStatement(insert);
@@ -20,10 +22,22 @@
 			ps.setDate(1, date);
 			ps.setString(2, request.getParameter("write"));
 			ps.setString(3, userid);
-			ps.executeUpdate();
+			int num = ps.executeUpdate();
+			
+			if(num > 0){
+				//SELECT LAST_INSERT_ID()
+				
+				ps = con.getConnection().prepareStatement("SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				if(rs.next()){
+					
+					int idx = rs.getInt(1);
+					response.sendRedirect("mainPage.jsp?id="+idx);
+				}
+			}
+			
 			ps.close();
-	
-			response.sendRedirect("mainPage.jsp");
+			
 		}
 		catch(SQLException e)
 		{

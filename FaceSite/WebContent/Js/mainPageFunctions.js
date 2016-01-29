@@ -1,14 +1,4 @@
-/*var _users;
-var _users;
-var _friends;
-var currentUser = 1;
 
-var pageX, pageY;
-
-
-
-
-*/
 function getDataForAllUsers() {
 	$("#pUserList").empty();
 
@@ -111,9 +101,6 @@ function getOnlineFriendsForUsers(userid) {
         });
     }
 
-
-
-//adding friend with ajax to DB,and get result of action
 function addFriend(element){
 	var friendName =$(element).data("data-user");
 	
@@ -179,7 +166,6 @@ function addComment(e, input,postId){
 	
 }
 
-//function to get all Users when we use the search input
 function getAllUsers(userName){
 	
 	
@@ -223,17 +209,8 @@ function getAllUsers(userName){
 				      $('#autocomplete').val(ui.item.label); 
 				      
 				      //open page profile of friend
-				      window.open("MainProfile.jsp?user="+ui.item.value, "_self");
+				      window.open("MainProfile.jsp?user="+ui.item.value+ "&catagory="+ui.item.Category, "_self");
 				      
-				      /*if ( ui.item.Category != 'Friends'){
-				    	  addFriend(ui.item.value);
-				    	  $('#autocomplete').val(""); 
-				      }
-				      else{
-				    	  
-				    	  	window.open("MainProfile.jsp?user="+ui.item.value, "_self");
-				      
-				      }*/
 				      //disable default action of select function (set input field to the value and not the label)
 				      return false;
 				},
@@ -277,13 +254,27 @@ function setAddBtn(isFriend,theuser){
 function checkForNewComments(array){
 	var postId = array[0];
 	if(postId){
-		$("#existingComments_"+postId).empty();
-		console.log('post id -> ' + postId );
-		getComments(postId);	
+		//$("#existingComments_"+postId).empty();
+		//console.log('post id -> ' + postId );
+		//getComments(postId);	
+		
+	
+
+	var comments = $("#existingComments_"+postId).children();
+	var commentsIds = [];
+	
+	if(comments){
+		//get the ids of all post in the div
+		for (var i = 0; i < comments.length; i++) {
+			var idx = comments[i].id;
+			commentsIds.push( idx );
+		}
+		
+		getComments(postId,commentsIds.toString());
 		
 	}
-
 	
+	}
 }
 
 function onCommentEnter(e, input,postId){
@@ -294,15 +285,17 @@ function onCommentEnter(e, input,postId){
 	 }
 	
 }
-function getPostDeatails(postIdsValues){
+
+
+function getPostDeatails(params){
 	
 	var postData = 'userName=' + currentUserId;
-	if(postIdsValues == undefined)
-	$('#postList').empty();
+	if(params == undefined)
+		$('#postList').empty();
 	else{
-		postData += '&postIds='+postIdsValues;
+		postData += '&postIds='+params;		
 	}
-	//getFriendsPostsHandler.jsp
+
 	
 	var htmlString = "";
     $.ajax({
@@ -315,29 +308,40 @@ function getPostDeatails(postIdsValues){
 		 $.each(data, function(i, value) {
 			
 			var btnID = "#toggle_comment_"+value.postId;
-			//var divID = "#comments_div_"+value.postId;
+			var divID = "post_" + value.postId;
 			var inputId = "addCommet_"+value.postId;
 			var existingCommecntDiv = "#existingComments_"+value.postId;
 			
-			htmlString =  "<div id='post_" + value.postId+ "' class='post_class'><div class='post_title><a href='#'><img src="+
-				value.profilePic +" class='pic_post' border='1px'></a>" + 
-				"<span class='userName'>" + value.FullName + "</span><span>says:</span>"
-				+ "<div class='dateTitle'>" + value.date + "</div></div>" +
-				"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
-				"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ existingCommecntDiv +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" 
-				+ "<div class='' id='comments_div_"+value.postId+"' >" +
-						"<div id='existingComments_" + value.postId +"' style='display:none'></div>" +
-						"<div id='newCommentDiv_"+value.postId+"' style='display:none'><input type='text' id="+inputId + " size='50' style='margin-right:5px;' onkeypress='onCommentEnter(event,this,"+value.postId +");'><a href='javascript:void(0);' class='cmtBtn' onclick='addComment(event,this,"+value.postId +")'>comment</a></div>" +
-						"</div>";	
 			
-			if(postIdsValues == undefined)
-				$('#postList').append(htmlString);
-				else{
-					$('#postList').prepend(htmlString);
-				}
+			htmlString =  "<div id='post_" + value.postId+ "' class='post_class'>" +
+								"<div class='post_title>" +
+									"<a href='#'><img src="+value.profilePic +" class='pic_post' border='1px'></a>" + 				
+									"<span class='userName'>" + value.FullName + "</span><span>says:</span>"+ 
+									"<div class='dateTitle'>" + value.date + "</div>" +
+								"</div>" +
+								"<div id='post_Content_1' class='post_Content'>"+ value.content + "</div>"+
+								"<div id='postAction'><a href='javascript:void(0);'><img  id='likeBtn_"+value.postId +"' onmouseover='this.src=\"Pics/thumb.png\";' onmouseout='this.src=\"Pics/thumb-hover.png\";'  src='Pics/thumb-hover.png' class='likePic'  ></a><a id='toggle_comment_"+value.postId+"' onclick='setCommentsDiv(\""+btnID+"\",\" "+ existingCommecntDiv +"\",\""+value.postId+"\");' href='javascript:void(0);' >show comments</a></div>" 
+								+"<div class='' id='comments_div_"+value.postId+"' >" +
+									"<div id='existingComments_" + value.postId +"' style='display:none'>" +
+								"</div>" +
+								"<div id='newCommentDiv_"+value.postId+"' style='display:none'><input type='text' id="+inputId + " size='50' style='margin-right:5px;' onkeypress='onCommentEnter(event,this,"+value.postId +");'><a href='javascript:void(0);' class='cmtBtn' onclick='addComment(event,this,"+value.postId +")'>comment</a></div>" +
+						  "</div>";	
 			
-				
-			});
+					var id = "#"+ divID;
+					if(params == undefined){
+		
+						$('#postList').append(htmlString);
+						//$(id).effect( "highlight", {color:"#ffff99"}, 3000 );
+					
+					}
+					else{
+						$('#postList').prepend(htmlString);
+						$(id).effect( "highlight", {color:"#ffff99"}, 2000 );
+						
+					}
+					
+					
+					});
 		},
 		error: function(e) {
 			alert("error in getPostDeatails!!!!!");
@@ -346,6 +350,7 @@ function getPostDeatails(postIdsValues){
     
    
 }
+
 
 function checkForNewPost(array){
 	
@@ -367,13 +372,18 @@ function checkForNewPost(array){
 	
 }
 
-function getComments(postId){
+function getComments(postId,comments){
+	var data = 'post=' + postId;
+	if(comments != undefined){
+		data += '&CommentIds='+ comments;		
+	}
+	
 	var result = false;
-var htmlString = "";
+	var htmlString = "";
         $.ajax({
 			url: "getCommentHandler.jsp",     
 			dataType: "json",
-			data: 'post=' + postId,
+			data: data,
 			async: false,
 			success: function(data) {
 			 var divID = '#existingComments_'+postId;			
@@ -382,12 +392,18 @@ var htmlString = "";
 						
 						//var divID = '#comments_div_'+value.postId;	
 						//console.log((users[j].fname + " " + users[j].lname));
-						htmlString =  "<div class='comment_class'><div class='comment_title'><a href='#'><img class='images_size' src="+
+						htmlString =  "<div id='"+data[i].commentId+"' class='comment_class'><div class='comment_title'><a href='#'><img class='images_size' src="+
 						data[i].pic +" class='pic_post' border='1px'></a><span class='userName'>" 
 						+ (data[i].FirstName + " " + data[i].LastName) + "</span><span>: " +data[i].content +"</span></div></div>"; 
 						//$('#post_'+postId).append(htmlString);
-						$(divID).append(htmlString);
-
+						
+						if(comments != undefined){
+							$(divID).prepend(htmlString);
+							$('#'+data[i].commentId).effect( "highlight", {color:"#ffff99"}, 3000 );
+						}
+						else{
+							$(divID).append(htmlString); 
+						}
 					
 					}
 					/*var inputId = "addCommet_"+postId;
@@ -611,6 +627,7 @@ function setCommentsDiv(btn, list,postId){
 function unbindClickOutsideComments() {
   $(document).off("mouseup.Comments");
 }
+
 function bindClickOutsideComments(btn,div) {
   $(document).on('mouseup.Comments',function (e){
     var container = $(div);
@@ -627,68 +644,6 @@ function bindClickOutsideComments(btn,div) {
   });
 }
 
-//change picture on hover
- /*var sourceSwap = function () {
-        var $this = $(this);
-        var newSource = $this.data('alt-src');
-        $this.data('alt-src', $this.attr('src'));
-        $this.attr('src', newSource);
-    }*/
-
-
-//set nav height
-function setHeight()
-{
-	var bodyHeight = parseInt($("body").height());
-	var mainPadding =  parseInt($("#main").css("padding-bottom").replace("px", ""));
-	var sectionPadding =  parseInt($("#section").css("padding").replace("px", ""));
-	$("#nav").css("height", bodyHeight+65);
-	//alert(bodyHeight+50);
-}
-
-function showWellcomDialog(){
-	alert("ddd");
-	
-		var id = '#dialog';
-			
-		//Get the screen height and width
-		var maskHeight = $(document).height();
-		var maskWidth = $(window).width();
-			
-		//Set heigth and width to mask to fill up the whole screen
-		$('#mask').css({'width':maskWidth,'height':maskHeight});
-		
-		//transition effect
-		$('#mask').fadeIn(500);	
-		$('#mask').fadeTo("slow",0.9);	
-			
-		//Get the window height and width
-		var winH = $(window).height();
-		var winW = $(window).width();
-		              
-		//Set the popup window to center
-		$(id).css('top',  winH/2-$(id).height()/2);
-		$(id).css('left', winW/2-$(id).width()/2);
-			
-		//transition effect
-		$(id).fadeIn(2000); 	
-			
-		//if close button is clicked
-		$('.window .close').click(function (e) {
-		//Cancel the link behavior
-		e.preventDefault();
-
-		$('#mask').hide();
-		$('.window').hide();
-		});
-
-		//if mask is clicked
-		$('#mask').click(function () {
-		$(this).hide();
-		$('.window').hide();
-		});
-
-}
 
 function customAutoComplete(){
 	
@@ -743,26 +698,22 @@ $(document).ready(function(){
 	pageX= event.pageX ; pageY= event.pageY;
 	});
 	
-	//getData();
+	
 	getPostDeatails();
-	$("#btnPost").click(getPostDeatails());
+	
 	
 	getOnlineFriends();
 	
 	setInterval(getOnlineFriends,8000);
 	
-	//getFullName(currentUserId); //for profile page
-	//getPictures(currentUserId);
-	
-	
 	setDialog('#msg', '#msgDropDown');
 	setDialog('#notif', '#NotifDropDown');
 	
-	//create the new autoComplete
+	
 	customAutoComplete();
 	
 	interval.make(checkForNewPost, 10000, []);
-
+	
 });
 
 

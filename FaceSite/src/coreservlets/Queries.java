@@ -21,7 +21,7 @@ public class Queries {
 			+ " on p.author = u.username where p.author in (SELECT seconduser FROM facebookdb.tblfriend"
 			+ " where firstuser = ?) || p.author=? order by date desc"; // <<added
 																		// ||
-	public String getNewFriendsPosts = "SELECT CONCAT(u.firstName, ' ', u.lastName) as 'FullName' ,u.profilePic "
+	public String getNewPosts = "SELECT CONCAT(u.firstName, ' ', u.lastName) as 'FullName' ,u.profilePic "
 			+ " ,p.postId , DATE_FORMAT(p.date , '%d/%m/%y') as date, p.content, p.author FROM "
 			+ " facebookdb.tblpost as p inner join tbluser as u "
 			+ " on p.author = u.username "
@@ -39,10 +39,13 @@ public class Queries {
 			+ "FROM tblnotification inner join tbluser on username=userOwner\n"
 			+ "where userOwner=?";
 
-	public String getComments = "SELECT firstName,lastName,content, profilePic "
+	public String getComments = "SELECT firstName,lastName,content, profilePic, commentId "
 			+ " FROM facebookdb.tblcomment inner join tbluser on author=username"
 			+ " where postId=?;";
-
+	public String getNewComments = "SELECT firstName,lastName,content, profilePic, commentId "
+			+ " FROM facebookdb.tblcomment inner join tbluser on author=username"
+			+ " where postId=? and FIND_IN_SET(CONVERT(commentId,CHAR),?) = 0;";
+	
 	public String insertComment = "INSERT INTO `facebookdb`.`tblcomment`\n"
 			+ "(`postId`,`content`,`author`) VALUES (?,?,?);";
 

@@ -12,11 +12,7 @@
 <title>Registration Form</title>
 	<%
 	if (session.getAttribute("userid") != null) {
-		if (session.getAttribute("userid").equals("Admin")) {
-			response.sendRedirect("mainPage.jsp");
-		} else {
-			//user hasn't log in keep load page
-		}
+		response.sendRedirect("mainPage.jsp");
 	}
 
 	else {

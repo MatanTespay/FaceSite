@@ -20,6 +20,7 @@
 			
 			String userName = request.getParameter("userName");
 			String existingpost = request.getParameter("postIds");
+			
 			//System.out.print(userName + "\n");
 			
 			JSONArray data = new JSONArray();
@@ -33,8 +34,8 @@
 				ps.setString(2, userName); // <<added this
 				
 			}else{
-				//get only new post of friends
-				ps = con.getConnection().prepareStatement(q.getNewFriendsPosts);
+				//get only new post
+				ps = con.getConnection().prepareStatement(q.getNewPosts);
 				ps.setString(1, userName); // ignore the user from th list in users
 				ps.setString(2, userName); // <<added this
 				ps.setString(3, existingpost); // the ids of the existing posts in DB
@@ -46,15 +47,7 @@
 			
 			
 			rs = ps.executeQuery();
-			 
-			/* JSONObject a = new JSONObject();*/
-			/*a.put("FullName","Matan Tespay");
-			a.put("profilePic", "profile1.png");
-			a.put("postId","1");
-			a.put("date","01/01/2016");
-			a.put("content","Test Test Test Test Test Test Test Test Test");
-			a.put("author","Me !!!!!!!!");
-			data.add(a); */
+			 		
 			
 			
 			 while(rs.next()){

@@ -16,15 +16,22 @@
 		try{
 
 			String postid = request.getParameter("post");
-			
+			String existingCommentIds  = request.getParameter("CommentIds");
 			JSONArray commentList = new JSONArray();
 			
 			PreparedStatement ps;
-			ps = con.getConnection().prepareStatement(q.getComments);
+			
+			if(existingCommentIds == null){
+				ps = con.getConnection().prepareStatement(q.getComments);
+				ps.setInt(1, Integer.parseInt(postid)); 
+				
+			}else{
+				ps = con.getConnection().prepareStatement(q.getNewComments);
+				ps.setInt(1, Integer.parseInt(postid)); 
+				ps.setString(2, existingCommentIds); 
+			}
+			
 			ResultSet rs;
-			
-			ps.setInt(1, Integer.parseInt(postid)); 
-			
 			
 			rs = ps.executeQuery();
 						
@@ -34,7 +41,7 @@
 				comment.put("LastName",rs.getString("lastName"));
 				comment.put("content",rs.getString("content"));
 				comment.put("pic",rs.getString("profilePic"));
-
+				comment.put("commentId",rs.getString("commentId"));
 				commentList.add(comment);
 				
 			}
