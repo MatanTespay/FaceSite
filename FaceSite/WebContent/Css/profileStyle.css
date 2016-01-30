@@ -15,7 +15,8 @@
 	left: 0px; 
 	border:1px solid black;
 	box-shadow: 5px 5px 3px #444444; /*right down effect*/
-	
+	width: 220px;
+	height: 269px;
 }
 .profilePics{
 	position: relative; 

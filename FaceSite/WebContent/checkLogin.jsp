@@ -17,7 +17,6 @@
 
 	String userid = request.getParameter("user");
 	String pwd = request.getParameter("pass");
-	//int userNumber = 6;
 
 	PreparedStatement ps = null;
 	ResultSet rs;

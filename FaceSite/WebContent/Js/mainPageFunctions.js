@@ -674,15 +674,11 @@ function customAutoComplete(){
 	    	
 	    	if ( item.Category != 'Friends') {
 		           li.attr( "aria-label", item.Category + " : " + item.label );
-		           li.attr( "data-value", item.value ).append( item.label ).append(
-		        		  "<img  src='Pics/adduser.png' style='float: right; display:inline '>"
-		        		   ).appendTo( ul );
+		           li.attr( "data-value", item.value ).append( item.label ).appendTo( ul );
 		    }
 	    	else{
 	    		li.attr( "aria-label", item.Category + " : " + item.label );
-	    		li.attr( "data-value", item.value ).append( item.label ).append(
-		        		  "<img  src='Pics/forward.png' style='float: right;  display:inline'>"
-		        		   ).appendTo( ul );
+	    		li.attr( "data-value", item.value ).append( item.label ).appendTo( ul );
 	    	}
 	    	 
 	    	return li;
