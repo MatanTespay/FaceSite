@@ -7,7 +7,7 @@ function getDataForAllUsers() {
 		dataType: "json",
 		data: 'userName='+currentUserId, 
         success: function(data) {  
-        	
+        	$("#pUserList").empty();
 				$.each(data, function(j, item) {
 					var str = item.name;
 					$("#pUserList").append("<li><a href=MainProfile.jsp?user="+item.user+"&catagory="+item.catagory+">"+str+"</a></li>");
@@ -24,14 +24,14 @@ function getDataForAllUsers() {
 function getOnlineFriends() {
 	//get online friends
 	
-	$("#friendsList").empty();
+	//$("#friendsList").empty();
 	//$("#pFriendList").empty();
     $.ajax({
         url: "getFriendsHandler.jsp",     
 		dataType: "json",
 		data: 'userName='+currentUserId, 
         success: function(data) {  
-        	
+        		$("#friendsList").empty();
 				$.each(data, function(j, item) {
 				// console.log(item.fname + " " + item.lname);
 				if (item.isOnline) {
@@ -100,6 +100,16 @@ function getOnlineFriendsForUsers(userid) {
             }
         });
     }
+
+function isValidForm(evt){
+		//evt.preventDefault();	
+		var text = document.getElementById("write").value;
+		if(text == ''){
+			return false;
+		}
+		else
+		return true;
+}
 
 function addFriend(element){
 	var friendName =$(element).data("data-user");
@@ -303,7 +313,7 @@ function getPostDeatails(params){
 		dataType: "json",	
 		async: false,
 		type: 'POST',
-		data: postData,
+		data: postData,		
 		success: function(data) {  
 		 $.each(data, function(i, value) {
 			
@@ -708,7 +718,10 @@ $(document).ready(function(){
 	
 	customAutoComplete();
 	
-	interval.make(checkForNewPost, 10000, []);
+	var currentPage = location.pathname.substring(location.pathname.lastIndexOf("/")+1);
+	if(currentPage == 'mainPage.jsp'){
+		interval.make(checkForNewPost, 10000, ["postChecker"]);
+	}
 	
 });
 

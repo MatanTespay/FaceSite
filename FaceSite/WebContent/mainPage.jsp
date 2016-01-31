@@ -111,12 +111,12 @@
 
 			</div>
 			<div id="section">
-				<form action="PostHandler.jsp" method="post">
+				<form action="PostHandler.jsp" method="post" onsubmit="return isValidForm(event)">
 					<label for="write"><b>Write something! :)</b></label> <br>
 					<!--<input type="text" id="write"> -->
 					<textarea name="write" id="write" rows="5" cols="45"></textarea>
 					<br>
-					<button id="btnPost" type="submit">Post It!</button>
+					<button id="btnPost"  type="submit">Post It!</button>
 				</form>
 				<br> <br>
 				<div id="postList"></div>
